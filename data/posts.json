@@ -1,1 +1,7 @@
-[]
+[
+	{
+		"userId": 1,
+		"title": "Some post title",
+		"body": "Once upon a time. That's it."
+	}
+]
