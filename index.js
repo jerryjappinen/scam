@@ -54,19 +54,26 @@ if (command && command !== 'start') {
 	// Start app with some debug info
 	const chalk = require('chalk')
 	app.listen(app.get('port'), function () {
-		let url = 'http://localhost:' + app.get('port') + '/'
-		console.log('\n' + 'Crude API is now running with these endpoints:' + '\n')
+		let url = 'http://localhost:' + app.get('port')
 
-		// Show URL of each list endpoints
-		console.log(chalk.blue('\tGET       ') + url + '/')
-		for (let key in crude.schema) {
-			let path = crude.schema[key].plural
-			console.log(chalk.blue('\tGET       ') + url + path)
-			console.log(chalk.blue('\tGET       ') + url + path + '/:id')
-			console.log(chalk.green('\tPOST      ') + url + path)
-			console.log(chalk.green('\tPUT       ') + url + path)
-			console.log(chalk.yellow('\tDELETE    ') + url + path)
-			console.log()
+		console.log('Crude API is now running with these endpoints:')
+
+		let endpoints = crude.endpoints()
+		let lastPath
+
+		for (let key in endpoints) {
+			let endpoint = endpoints[key]
+			let color = (endpoint.method === 'get' ? 'blue' : (endpoint.method === 'delete' ? 'yellow' : 'green'))
+			let method = endpoint.method.toUpperCase()
+			let path = url + endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
+
+			if (lastPath !== endpoint.path) {
+				lastPath = endpoint.path
+				console.log()
+			}
+
+			console.log(chalk[color]('\t' + method + '\t\t') + path)
+
 		}
 
 	})

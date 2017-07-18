@@ -64,6 +64,54 @@ module.exports = {
 
 	// API
 
+	endpoints: function () {
+		let endpoints = [
+			{
+				method: 'get',
+				path: '/'
+			}
+		]
+
+		for (let key in this.schema) {
+			let path = this.schema[key].plural
+
+			// GET list
+			endpoints.push({
+				method: 'get',
+				path: '/' + path
+			})
+
+			// GET list/:id
+			endpoints.push({
+				method: 'get',
+				path: '/' + path,
+				params: ['id']
+			})
+
+			// POST list/:id
+			endpoints.push({
+				method: 'post',
+				path: '/' + path
+			})
+
+			// PUT list/:id
+			endpoints.push({
+				method: 'put',
+				path: '/' + path,
+				params: ['id']
+			})
+
+			// DELETE list/:id
+			endpoints.push({
+				method: 'delete',
+				path: '/' + path
+			})
+
+		}
+
+		return endpoints
+	},
+
 	clearDatabase: function () {
 		clearDatabase(this.dbPath)
 	},
