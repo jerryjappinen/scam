@@ -42,7 +42,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				resolve(transform(schema[resourceType], row))
+				resolve(transform(schema, resourceType, row))
 
 			} catch (error) {
 				reject(error)
@@ -70,7 +70,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				resolve(transform(schema[resourceType], rows))
+				resolve(transform(schema, resourceType, rows))
 
 			} catch (error) {
 				reject(error)

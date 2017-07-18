@@ -24,29 +24,10 @@ The following raw types are supported:
 - `string`
 - `float`
 - `boolean`
+- `date`
+- `time`
 - `timestamp`
 
 Default is `'integer'`, and it doesn't need to be specified.
 
 You can also use the key of another resource type as the `type`. In this case the values are integers and are treated as IDs pointing to resources of the given type.
-
-## Todo
-
-- [x] Dummy data
-- [ ] Make required work (return errors from POST)
-- [ ] PUT/UPDATE
-- [ ] DELETE
-- [ ] Error format
-- [x] Field transformers
-- [x] Create timestamps
-- [ ] Update timestamps
-- [ ] Appropriate error codes (not 500 all the time)
-- [ ] Relations via type
-- [ ] Nesting via `depth` param
-- [ ] Sorting in lists via `sort` param
-- [ ] Filtering in lists via any field param
-- [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
-- [ ] Make module independent
-	- Pass DB from top level
-	- Pass schema from top level
-	- Keep DB connection open

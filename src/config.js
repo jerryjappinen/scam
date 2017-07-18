@@ -5,7 +5,9 @@ module.exports = {
 		integer: 'INTEGER',
 		string: 'TEXT',
 		float: 'FLOAT',
-		boolean: 'BOOL',
+		boolean: 'BOOLEAN',
+		date: 'TIME',
+		time: 'DATE',
 		timestamp: 'TIMESTAMP'
 	},
 
