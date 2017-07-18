@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const bodyParser = require('body-parser')
 
 const schema = require('../schema')
 const select = require('./select')
@@ -6,8 +7,31 @@ const insert = require('./insert')
 
 module.exports = {
 
+	init: function (app) {
+		this.prepareApp(app).initRoutes(app)
+	},
+
+	prepareApp: function (app) {
+		app.use(bodyParser.json())
+		app.use(bodyParser.urlencoded({
+			extended: true
+		}))
+		return this
+	},
+
+	initRoutes: function (app) {
+		this.initGetRoot(app)
+			.initGetById(app)
+			.initGetList(app)
+			.initPostToList(app)
+	},
+
+
+
+	// Routes
+
 	// Root
-	getRoot: function (app) {
+	initGetRoot: function (app) {
 
 		app.get('/', function (request, response) {
 			response.status(200).json({
@@ -23,7 +47,7 @@ module.exports = {
 	},
 
 	// Generate list endpoints in a loop
-	getList: function (app) {
+	initGetList: function (app) {
 
 		for (let resourceType in schema) {
 			let resource = schema[resourceType]
@@ -59,7 +83,7 @@ module.exports = {
 		return this
 	},
 
-	getById: function (app) {
+	initGetById: function (app) {
 
 		for (let resourceType in schema) {
 			let resource = schema[resourceType]
@@ -107,7 +131,7 @@ module.exports = {
 		return this
 	},
 
-	postToList: function (app) {
+	initPostToList: function (app) {
 
 		for (let resourceType in schema) {
 			let resource = schema[resourceType]

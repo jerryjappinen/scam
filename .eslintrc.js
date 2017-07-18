@@ -33,7 +33,7 @@ module.exports = {
 		// Semi colons required to avoid any gotchas
 		'semi': [
 			'warn',
-			'always'
+			'never'
 		],
 
 		// Single quotes should be used

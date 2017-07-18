@@ -11,7 +11,8 @@ const db = new Database(path.resolve(__dirname, '../db.sql'), {
 
 // Map types used in schema to SQL (defaults to int)
 const sqlTypes = {
-	string: 'TEXT'
+	string: 'TEXT',
+	float: 'FLOAT'
 }
 
 // Set up each resource

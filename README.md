@@ -20,7 +20,11 @@ Define your schema under `schema/`.
 
 The following raw types are supported:
 
+- (`integer`)
 - `string`
+- `float`
+
+Default is integer, and it doesn't need to be specified.
 
 You can also use the key of another resource type as the `type`. In this case the values are integers and are treated as IDs pointing to resources of the given type.
 
