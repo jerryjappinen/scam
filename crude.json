@@ -1,5 +1,5 @@
 {
 	"data": "./data",
 	"schema": "./schema",
-	"db": "./db.sql"
+	"db": "./db/db.sql"
 }
