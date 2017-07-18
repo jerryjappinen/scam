@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "node ./init/index.js",
+    "init": "node ./src/init.js",
     "start": "node ./index.js",
     "dev": "nodemon ./index.js"
   },

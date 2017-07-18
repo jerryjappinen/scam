@@ -2,7 +2,7 @@ const _ = require('lodash')
 const path = require('path')
 const Database = require('better-sqlite3')
 
-const resources = require('../resources')
+const resources = require('../schema')
 
 const db = new Database(path.resolve(__dirname, '../db.sql'), {
 	readonly: false

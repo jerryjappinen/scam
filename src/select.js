@@ -3,7 +3,7 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const resources = require('../resources')
+const resources = require('../schema')
 
 const db = new Database(path.resolve(__dirname, '../db.sql'), {
 	readonly: true
@@ -11,11 +11,11 @@ const db = new Database(path.resolve(__dirname, '../db.sql'), {
 
 module.exports = {
 
-	get: function (resourceType, id) {
-		return this.getBy(resourceType, 'id', id)
+	select: function (resourceType, id) {
+		return this.selectBy(resourceType, 'id', id)
 	},
 
-	getBy: function (resourceType, key, value) {
+	selectBy: function (resourceType, key, value) {
 		let resource = resources[resourceType];
 		let field = resource.fields[key];
 		let query = squel.select()
@@ -34,7 +34,7 @@ module.exports = {
 
 	},
 
-	getAll: function (resourceType) {
+	selectAll: function (resourceType) {
 		let resource = resources[resourceType];
 		let query = squel.select()
 			.from(resource.plural)

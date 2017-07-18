@@ -4,7 +4,7 @@ Simple schema-based CRUD app bootstrapper on node and SQLite.
 
 ## Usage
 
-Define your schema under `resources/`.
+Define your schema under `schema/`.
 
 ```js
 {
