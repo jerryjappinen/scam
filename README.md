@@ -26,9 +26,14 @@ You can also use the key of another resource type as the `type`. In this case th
 
 ## Todo
 
-- Dummy data
-- Make required work (return errors from POST)
-- PUT/UPDATE
-- DELETE
-- Error format
-- Appropriate error codes (not 500 all the time)
+- [x] Dummy data
+- [ ] Make required work (return errors from POST)
+- [ ] PUT/UPDATE
+- [ ] DELETE
+- [ ] Error format
+- [ ] Appropriate error codes (not 500 all the time)
+- [ ] Relations via type
+- [ ] Nesting via $depth
+- [ ] Sorting in lists via $sort
+- [ ] Filtering in lists via params
+- [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
