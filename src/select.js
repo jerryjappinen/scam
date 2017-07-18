@@ -2,8 +2,6 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const dbPath = path.resolve(__dirname, '../db.sql')
-
 module.exports = {
 
 	// Select an item by ID
