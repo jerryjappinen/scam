@@ -15,8 +15,14 @@ module.exports = {
 		// Start with defaults as defined in schema
 		let defaults = {};
 		for (let schemaKey in resource.fields) {
-			if (resource.fields !== undefined) {
-				defaults[schemaKey] = resource.fields[schemaKey]
+
+			// Default provided
+			if (resource.fields.default !== undefined) {
+				defaults[schemaKey] = resource.fields[schemaKey].default
+
+			// NULL value
+			} else {
+				defaults[schemaKey] = null
 			}
 		}
 
@@ -26,7 +32,7 @@ module.exports = {
 		// Prepare query
 		let query = squel.insert().into(resource.plural)
 		for (let key in finalValues) {
-			query = query.set(key, input[key])
+			query = query.set(key, finalValues[key])
 		}
 		query = query.toString()
 
