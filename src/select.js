@@ -1,6 +1,8 @@
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
+const transform = require('./transform')
+
 module.exports = {
 
 	// Select an item by ID
@@ -40,7 +42,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				resolve(row)
+				resolve(transform(schema[resourceType], row))
 
 			} catch (error) {
 				reject(error)
@@ -68,7 +70,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				resolve(rows)
+				resolve(transform(schema[resourceType], rows))
 
 			} catch (error) {
 				reject(error)

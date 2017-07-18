@@ -22,6 +22,7 @@ module.exports = {
 	app: null,
 	data: null,
 	dbPath: null,
+	endpoints: null,
 	schema: null,
 
 	setApp: function (app) {
@@ -48,19 +49,19 @@ module.exports = {
 
 	// Setup work
 
-	prepareApp: function (app) {
-		app.use(bodyParser.json())
-		app.use(bodyParser.urlencoded({
+	prepareApp: function () {
+		this.app.use(bodyParser.json())
+		this.app.use(bodyParser.urlencoded({
 			extended: true
 		}))
 		return this
 	},
 
-	initRoutes: function (app, dbPath, schema) {
-		initGetRoot(app, dbPath, schema)
-		initGetById(app, dbPath, schema)
-		initGetList(app, dbPath, schema)
-		initPostToList(app, dbPath, schema)
+	initRoutes: function () {
+		initGetRoot(this)
+		initGetById(this)
+		initGetList(this)
+		initPostToList(this)
 		return this
 	},
 
@@ -68,7 +69,7 @@ module.exports = {
 
 	// API
 
-	endpoints: function () {
+	setEndpoints: function () {
 		let endpoints = [
 			{
 				method: 'get',
@@ -113,7 +114,9 @@ module.exports = {
 
 		}
 
-		return endpoints
+		this.endpoints = endpoints
+
+		return this
 	},
 
 	clearDatabase: function () {
@@ -141,11 +144,12 @@ module.exports = {
 			.setData(dataPath)
 			.setDbPath(dbPath)
 			.setSchema(schemaPath)
+			.setEndpoints()
 		return this
 	},
 
 	prepare: function () {
-		return this.prepareApp(this.app).initRoutes(this.app, this.dbPath, this.schema)
+		return this.prepareApp().initRoutes()
 	}
 
 }

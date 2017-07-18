@@ -23,8 +23,10 @@ The following raw types are supported:
 - (`integer`)
 - `string`
 - `float`
+- `boolean`
+- `timestamp`
 
-Default is integer, and it doesn't need to be specified.
+Default is `'integer'`, and it doesn't need to be specified.
 
 You can also use the key of another resource type as the `type`. In this case the values are integers and are treated as IDs pointing to resources of the given type.
 
@@ -35,7 +37,8 @@ You can also use the key of another resource type as the `type`. In this case th
 - [ ] PUT/UPDATE
 - [ ] DELETE
 - [ ] Error format
-- [ ] Timestamps
+- [ ] Create timestamps
+- [ ] Update timestamps
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Relations via type
 - [ ] Nesting via $depth

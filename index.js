@@ -58,11 +58,9 @@ if (command && command !== 'start') {
 
 		console.log('Crude API is now running with these endpoints:')
 
-		let endpoints = crude.endpoints()
 		let lastPath
-
-		for (let key in endpoints) {
-			let endpoint = endpoints[key]
+		for (let key in crude.endpoints) {
+			let endpoint = crude.endpoints[key]
 			let method = endpoint.method.toUpperCase()
 			let path = url + endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
 

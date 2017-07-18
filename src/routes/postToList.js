@@ -1,18 +1,18 @@
 const insert = require('../insert')
 
-module.exports = function (app, dbPath, schema) {
+module.exports = function (crude) {
 
-	for (let resourceType in schema) {
-		let resource = schema[resourceType]
+	for (let resourceType in crude.schema) {
+		let resource = crude.schema[resourceType]
 
 		// Register post endpoint
-		app.post('/' + resource.plural, function (request, response) {
+		crude.app.post('/' + resource.plural, function (request, response) {
 			let values = {}
 			for (let requestKey in request.body) {
 				values[requestKey] = request.body[requestKey]
 			}
 
-			insert.one(dbPath, schema, resourceType, values).then(function (newRowId) {
+			insert.one(crude.dbPath, crude.schema, resourceType, values).then(function (newRowId) {
 
 				// Send out success response
 				response.status(201).json({
