@@ -37,13 +37,14 @@ You can also use the key of another resource type as the `type`. In this case th
 - [ ] PUT/UPDATE
 - [ ] DELETE
 - [ ] Error format
-- [ ] Create timestamps
+- [x] Field transformers
+- [x] Create timestamps
 - [ ] Update timestamps
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Relations via type
-- [ ] Nesting via $depth
-- [ ] Sorting in lists via $sort
-- [ ] Filtering in lists via params
+- [ ] Nesting via `depth` param
+- [ ] Sorting in lists via `sort` param
+- [ ] Filtering in lists via any field param
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Make module independent
 	- Pass DB from top level

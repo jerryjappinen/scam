@@ -1,6 +1,6 @@
 const Database = require('better-sqlite3')
 
-const insert = require('../insert')
+const insert = require('../db/insert')
 
 module.exports = function (dbPath, schema, data) {
 

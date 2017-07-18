@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const transform = require('./transform')
+const transform = require('../transform')
 
 module.exports = {
 

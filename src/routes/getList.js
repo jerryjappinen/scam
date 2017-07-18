@@ -1,4 +1,4 @@
-const select = require('../select')
+const select = require('../db/select')
 
 // Generate list endpoints in a loop
 module.exports = function (crude) {

@@ -1,4 +1,4 @@
-const select = require('../select')
+const select = require('../db/select')
 
 module.exports = function (crude) {
 

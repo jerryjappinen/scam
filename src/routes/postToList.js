@@ -1,4 +1,4 @@
-const insert = require('../insert')
+const insert = require('../db/insert')
 
 module.exports = function (crude) {
 

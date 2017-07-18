@@ -11,10 +11,6 @@ const initGetById = require('./routes/getById')
 const initGetList = require('./routes/getList')
 const initPostToList = require('./routes/postToList')
 
-// Operations
-// const insert = require('./insert')
-// const select = require('./select')
-
 module.exports = {
 
 	// Props
