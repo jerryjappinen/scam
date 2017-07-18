@@ -63,9 +63,14 @@ if (command && command !== 'start') {
 
 		for (let key in endpoints) {
 			let endpoint = endpoints[key]
-			let color = (endpoint.method === 'get' ? 'blue' : (endpoint.method === 'delete' ? 'yellow' : 'green'))
 			let method = endpoint.method.toUpperCase()
 			let path = url + endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
+
+			let color = endpoint.method === 'get'
+				? 'blue'
+				: endpoint.method === 'delete'
+					? 'yellow'
+					: 'green'
 
 			if (lastPath !== endpoint.path) {
 				lastPath = endpoint.path
