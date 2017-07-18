@@ -16,8 +16,8 @@ const sqlTypes = {
 // Set up each resource
 for (let key in resources) {
 	let resource = resources[key]
-	let columnDefinitions = ['id INT']
-	let columnDummyValues = ['1']
+	let columnDefinitions = []
+	let columnDummyValues = []
 
 	// Generate columns for SQL
 	for (let fieldName in resource.fields) {
@@ -33,10 +33,10 @@ for (let key in resources) {
 	}
 
 	// Create the tables
-	db.prepare('CREATE TABLE ' + resource.plural + ' (' + columnDefinitions.join(', ') + ')').run()
+	db.prepare('CREATE TABLE ' + resource.plural + ' (id integer primary key, ' + columnDefinitions.join(', ') + ')').run()
 
 	// Insert dummy data
-	db.prepare('INSERT INTO ' + resource.plural + ' VALUES (' + columnDummyValues.join(', ') + ')').run()
+	db.prepare('INSERT INTO ' + resource.plural + ' VALUES (NULL, ' + columnDummyValues.join(', ') + ')').run()
 
 }
 

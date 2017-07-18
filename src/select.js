@@ -11,11 +11,11 @@ const db = new Database(path.resolve(__dirname, '../db.sql'), {
 
 module.exports = {
 
-	select: function (resourceType, id) {
-		return this.selectBy(resourceType, 'id', id)
+	one: function (resourceType, id) {
+		return this.by(resourceType, 'id', id)
 	},
 
-	selectBy: function (resourceType, key, value) {
+	by: function (resourceType, key, value) {
 		let resource = resources[resourceType];
 		let field = resource.fields[key];
 
@@ -34,7 +34,7 @@ module.exports = {
 		})
 	},
 
-	selectAll: function (resourceType) {
+	all: function (resourceType) {
 		let resource = resources[resourceType];
 
 		let query = squel.select()

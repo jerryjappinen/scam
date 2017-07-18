@@ -11,7 +11,7 @@ module.exports = {
 
 		accessLevel: {
 			type: 'number',
-			required: true,
+			required: false,
 			default: 0
 		},
 
@@ -22,7 +22,8 @@ module.exports = {
 
 		phone: {
 			type: 'string',
-			required: false
+			required: false,
+			default: null
 		}
 
 	}

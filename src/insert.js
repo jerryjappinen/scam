@@ -3,30 +3,44 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
+const select = require('./select')
 const resources = require('../schema')
 
 const db = new Database(path.resolve(__dirname, '../db.sql'), {
-	readonly: true
+	readonly: false
 })
 
 module.exports = {
 
-	insertOne: function (resourceType, values) {
+	one: function (resourceType, input) {
 		let resource = resources[resourceType];
-		let field = resource.fields[key];
 
-		let query = squel.insert().into(resource.plural)
-
-		for (let key in values) {
-			query = query.set(key, values[key])
+		// Start with defaults as defined in schema
+		let defaults = {};
+		for (let schemaKey in resource.fields) {
+			if (resource.fields !== undefined) {
+				defaults[schemaKey] = resource.fields[schemaKey]
+			}
 		}
 
+		// Override with user input
+		let finalValues = _.merge({}, defaults, input)
+
+		// Prepare query
+		let query = squel.insert().into(resource.plural)
+		for (let key in finalValues) {
+			query = query.set(key, input[key])
+		}
 		query = query.toString()
 
 		return new Promise(function (resolve, reject) {
 			try	{
-				let info = db.prepare(query).run();
-				resolve(info.lastInsertROWID)
+				let insertedInfo = db.prepare(query).run();
+
+				select.one(resourceType, insertedInfo.lastInsertROWID).then(function (row) {
+					resolve(row)
+				})
+
 			} catch (error) {
 				reject(error)
 			}

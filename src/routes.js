@@ -1,7 +1,8 @@
 const _ = require('lodash')
 
 const resources = require('../schema')
-const db = require('./db')
+const select = require('./select')
+const insert = require('./insert')
 
 module.exports = {
 
@@ -30,7 +31,7 @@ module.exports = {
 			// Register list getter endpoint
 			app.get('/' + resource.plural, function (request, response) {
 
-				db.selectAll(resourceType).then(function (rows) {
+				select.all(resourceType).then(function (rows) {
 
 					// Send out success response
 					response.status(200).json({
@@ -66,7 +67,7 @@ module.exports = {
 			// Register ID getter endpoint
 			app.get('/' + resource.plural + '/:id', function (request, response) {
 
-				db.select(resourceType, request.params.id).then(function (row) {
+				select.one(resourceType, request.params.id).then(function (row) {
 
 					if (row) {
 
@@ -119,7 +120,7 @@ module.exports = {
 					values[requestKey] = request.body[requestKey]
 				}
 
-				db.insertOne(resourceType, values).then(function (newRowId) {
+				insert.one(resourceType, values).then(function (newRowId) {
 
 					// Send out success response
 					response.status(201).json({
