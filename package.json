@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "reload": "npm run clear && npm run init && npm run load",
-    "clear": "node ./scripts/clear.js",
-    "init": "node ./scripts/init.js",
-    "load": "node ./scripts/load.js",
+    "clear": "node ./index.js clear",
+    "init": "node ./index.js init",
+    "load": "node ./index.js load",
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
     "lint": "eslint --ext .js src scripts"

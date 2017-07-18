@@ -7,18 +7,24 @@ const dbFilePath = path.resolve(__dirname, '../db.sql')
 
 module.exports = {
 
+	// Select an item by ID
 	one: function (resourceType, id) {
-		return this.by(resourceType, 'id', id)
+		return this.by(resourceType, {
+			'id': id
+		})
 	},
 
-	by: function (resourceType, key, value) {
+	// Select item by value of any one field
+	by: function (resourceType, keyValuePairs) {
 		let resource = schema[resourceType]
-		let field = resource.fields[key]
 
-		let query = squel.select()
-			.from(resource.plural)
-			.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
-			.toString()
+		let query = squel.select().from(resource.plural)
+		for (let key in keyValuePairs) {
+			let value = keyValuePairs[key]
+			let field = resource.fields[key]
+			query = query.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
+		}
+		query = query.toString()
 
 		return new Promise(function (resolve, reject) {
 			try	{

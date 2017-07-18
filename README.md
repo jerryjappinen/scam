@@ -41,3 +41,7 @@ You can also use the key of another resource type as the `type`. In this case th
 - [ ] Sorting in lists via $sort
 - [ ] Filtering in lists via params
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
+- [ ] Make module independent
+	- Pass DB from top level
+	- Pass schema from top level
+	- Keep DB connection open
