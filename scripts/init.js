@@ -1,11 +1,11 @@
-const _ = require('lodash')
 const path = require('path')
 const Database = require('better-sqlite3')
 
 const schema = require('../schema')
 
 // Init database connection
-const db = new Database(path.resolve(__dirname, '../db.sql'), {
+const dbFilePath = path.resolve(__dirname, '../db.sql')
+const db = new Database(dbFilePath, {
 	readonly: false
 })
 
@@ -27,7 +27,7 @@ for (let resourceType in schema) {
 		let type = 'INT'
 
 		if (sqlTypes[field.type]) {
-			type = sqlTypes[field.type];
+			type = sqlTypes[field.type]
 		}
 
 		columnDefinitions.push(fieldName + ' ' + type)
@@ -38,4 +38,4 @@ for (let resourceType in schema) {
 
 }
 
-db.close();
+db.close()

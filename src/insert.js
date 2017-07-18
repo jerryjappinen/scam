@@ -10,10 +10,10 @@ const dbFilePath = path.resolve(__dirname, '../db.sql')
 module.exports = {
 
 	one: function (resourceType, input) {
-		let resource = schema[resourceType];
+		let resource = schema[resourceType]
 
 		// Start with defaults as defined in schema
-		let defaults = {};
+		let defaults = {}
 		for (let schemaKey in resource.fields) {
 
 			// Default provided
@@ -45,10 +45,10 @@ module.exports = {
 				})
 
 				// Execute query
-				let insertedInfo = db.prepare(query).run();
+				let insertedInfo = db.prepare(query).run()
 
 				// Close local database connection
-				db.close();
+				db.close()
 
 				// Fetch the inserted object
 				select.one(resourceType, insertedInfo.lastInsertROWID).then(function (row) {

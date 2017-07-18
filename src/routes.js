@@ -138,7 +138,7 @@ module.exports = {
 
 			// Register post endpoint
 			app.post('/' + resource.plural, function (request, response) {
-				let values = {};
+				let values = {}
 				for (let requestKey in request.body) {
 					values[requestKey] = request.body[requestKey]
 				}

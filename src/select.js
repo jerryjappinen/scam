@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
@@ -13,8 +12,8 @@ module.exports = {
 	},
 
 	by: function (resourceType, key, value) {
-		let resource = schema[resourceType];
-		let field = resource.fields[key];
+		let resource = schema[resourceType]
+		let field = resource.fields[key]
 
 		let query = squel.select()
 			.from(resource.plural)
@@ -30,10 +29,10 @@ module.exports = {
 				})
 
 				// Execute query
-				let row = db.prepare(query).get();
+				let row = db.prepare(query).get()
 
 				// Close local database connection
-				db.close();
+				db.close()
 
 				// Resolve promise
 				resolve(row)
@@ -45,7 +44,7 @@ module.exports = {
 	},
 
 	all: function (resourceType) {
-		let resource = schema[resourceType];
+		let resource = schema[resourceType]
 
 		let query = squel.select()
 			.from(resource.plural)
@@ -60,10 +59,10 @@ module.exports = {
 				})
 
 				// Execute query
-				let rows = db.prepare(query).all();
+				let rows = db.prepare(query).all()
 
 				// Close local database connection
-				db.close();
+				db.close()
 
 				// Resolve promise
 				resolve(rows)
