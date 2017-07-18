@@ -2,8 +2,9 @@ const _ = require('lodash')
 const path = require('path')
 const Database = require('better-sqlite3')
 
-const resources = require('../schema')
+const schema = require('../schema')
 
+// Init database connection
 const db = new Database(path.resolve(__dirname, '../db.sql'), {
 	readonly: false
 })
@@ -14,10 +15,9 @@ const sqlTypes = {
 }
 
 // Set up each resource
-for (let key in resources) {
-	let resource = resources[key]
+for (let resourceType in schema) {
+	let resource = schema[resourceType]
 	let columnDefinitions = []
-	let columnDummyValues = []
 
 	// Generate columns for SQL
 	for (let fieldName in resource.fields) {
@@ -29,14 +29,10 @@ for (let key in resources) {
 		}
 
 		columnDefinitions.push(fieldName + ' ' + type)
-		columnDummyValues.push(type === 'TEXT' ? '"Lorem ipsum"' : 1)
 	}
 
 	// Create the tables
 	db.prepare('CREATE TABLE ' + resource.plural + ' (id integer primary key, ' + columnDefinitions.join(', ') + ')').run()
-
-	// Insert dummy data
-	db.prepare('INSERT INTO ' + resource.plural + ' VALUES (NULL, ' + columnDummyValues.join(', ') + ')').run()
 
 }
 

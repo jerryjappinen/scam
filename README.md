@@ -23,3 +23,12 @@ The following raw types are supported:
 - `string`
 
 You can also use the key of another resource type as the `type`. In this case the values are integers and are treated as IDs pointing to resources of the given type.
+
+## Todo
+
+- Dummy data
+- Make required work (return errors from POST)
+- PUT/UPDATE
+- DELETE
+- Error format
+- Appropriate error codes (not 500 all the time)

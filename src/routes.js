@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-const resources = require('../schema')
+const schema = require('../schema')
 const select = require('./select')
 const insert = require('./insert')
 
@@ -14,7 +14,7 @@ module.exports = {
 				status: 200,
 				body: {
 					message: 'Hello world!',
-					resources: _.keys(resources)
+					schema: _.keys(schema)
 				}
 			})
 		})
@@ -25,8 +25,8 @@ module.exports = {
 	// Generate list endpoints in a loop
 	getList: function (app) {
 
-		for (let resourceType in resources) {
-			let resource = resources[resourceType]
+		for (let resourceType in schema) {
+			let resource = schema[resourceType]
 
 			// Register list getter endpoint
 			app.get('/' + resource.plural, function (request, response) {
@@ -61,8 +61,8 @@ module.exports = {
 
 	getById: function (app) {
 
-		for (let resourceType in resources) {
-			let resource = resources[resourceType]
+		for (let resourceType in schema) {
+			let resource = schema[resourceType]
 
 			// Register ID getter endpoint
 			app.get('/' + resource.plural + '/:id', function (request, response) {
@@ -109,12 +109,11 @@ module.exports = {
 
 	postToList: function (app) {
 
-		for (let resourceType in resources) {
-			let resource = resources[resourceType]
+		for (let resourceType in schema) {
+			let resource = schema[resourceType]
 
 			// Register post endpoint
 			app.post('/' + resource.plural, function (request, response) {
-
 				let values = {};
 				for (let requestKey in request.body) {
 					values[requestKey] = request.body[requestKey]

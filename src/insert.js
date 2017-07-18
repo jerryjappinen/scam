@@ -4,16 +4,13 @@ const Database = require('better-sqlite3')
 const squel = require('squel')
 
 const select = require('./select')
-const resources = require('../schema')
-
-const db = new Database(path.resolve(__dirname, '../db.sql'), {
-	readonly: false
-})
+const schema = require('../schema')
+const dbFilePath = path.resolve(__dirname, '../db.sql')
 
 module.exports = {
 
 	one: function (resourceType, input) {
-		let resource = resources[resourceType];
+		let resource = schema[resourceType];
 
 		// Start with defaults as defined in schema
 		let defaults = {};
@@ -35,9 +32,22 @@ module.exports = {
 
 		return new Promise(function (resolve, reject) {
 			try	{
+
+				// Init database connection
+				const db = new Database(dbFilePath, {
+					readonly: false
+				})
+
+				// Execute query
 				let insertedInfo = db.prepare(query).run();
 
+				// Close local database connection
+				db.close();
+
+				// Fetch the inserted object
 				select.one(resourceType, insertedInfo.lastInsertROWID).then(function (row) {
+
+					// Resolve promise
 					resolve(row)
 				})
 

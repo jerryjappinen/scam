@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "node ./src/init.js",
+		"reload": "npm run clear && npm run init && npm run load",
+    "clear": "node ./scripts/clear.js",
+    "init": "node ./scripts/init.js",
+    "load": "node ./scripts/load.js",
     "start": "node ./index.js",
     "dev": "nodemon ./index.js"
   },

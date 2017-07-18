@@ -1,0 +1,31 @@
+[
+	{
+		"email": "johnny@gmail.com",
+		"name": "Johnny Ive",
+		"phone": "+49123456789"
+	},
+	{
+		"email": "vincenza.christiansen@gmail.com",
+		"name": "Vincenza Christiansen"
+	},
+	{
+		"email": "cristopher.gusikowski@gmail.com",
+		"name": "Cristopher Gusikowski"
+	},
+	{
+		"email": "rozella.runolfsdottir@gmail.com",
+		"name": "Rozella Runolfsdottir"
+	},
+	{
+		"email": "francisco.christiansen@gmail.com",
+		"name": "Francisco Christiansen"
+	},
+	{
+		"email": "margaretta.stoltenberg@gmail.com",
+		"name": "Margaretta Stoltenberg"
+	},
+	{
+		"email": "rosemarie.satterfield@gmail.com",
+		"name": "Rosemarie Satterfield"
+	}
+]
