@@ -26,10 +26,17 @@ module.exports = {
 		// Override with user input
 		let finalValues = _.merge({}, defaults, input)
 
-		// Prepare query
-		let query = squel.insert().into(resource.plural)
+		// Prepare query with placeholders (values are entered in run() below)
+		let query = squel.insert({
+
+			// Overriding default string formatter because we don't want the placeholders escaped
+			stringFormatter: function (string) {
+				return string
+			}
+
+		}).into(resource.plural)
 		for (let key in finalValues) {
-			query = query.set(key, finalValues[key])
+			query = query.set(key, '@' + key)
 		}
 		query = query.toString()
 
@@ -42,17 +49,23 @@ module.exports = {
 				})
 
 				// Execute query
-				let insertedInfo = db.prepare(query).run()
+				let insertedInfo = db.prepare(query).run(finalValues)
 
 				// Close local database connection
 				db.close()
 
 				// Fetch the inserted object
-				select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID).then(function (row) {
+				try {
+					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID).then(function (row) {
 
-					// Resolve promise
-					resolve(row)
-				})
+						// Resolve original promise
+						resolve(row)
+
+					})
+
+				} catch (error) {
+					reject(error)
+				}
 
 			} catch (error) {
 				reject(error)
