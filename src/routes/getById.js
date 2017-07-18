@@ -1,6 +1,6 @@
 const select = require('../select')
 
-module.exports = function (app, schema) {
+module.exports = function (app, dbPath, schema) {
 
 	for (let resourceType in schema) {
 		let resource = schema[resourceType]
@@ -8,7 +8,7 @@ module.exports = function (app, schema) {
 		// Register ID getter endpoint
 		app.get('/' + resource.plural + '/:id', function (request, response) {
 
-			select.one(resourceType, request.params.id).then(function (row) {
+			select.one(dbPath, schema, resourceType, request.params.id).then(function (row) {
 
 				if (row) {
 

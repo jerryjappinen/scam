@@ -1,7 +1,7 @@
 const select = require('../select')
 
 // Generate list endpoints in a loop
-module.exports = function (app, schema) {
+module.exports = function (app, dbPath, schema) {
 
 	for (let resourceType in schema) {
 		let resource = schema[resourceType]
@@ -9,7 +9,7 @@ module.exports = function (app, schema) {
 		// Register list getter endpoint
 		app.get('/' + resource.plural, function (request, response) {
 
-			select.all(resourceType).then(function (rows) {
+			select.all(dbPath, schema, resourceType).then(function (rows) {
 
 				// Send out success response
 				response.status(200).json({

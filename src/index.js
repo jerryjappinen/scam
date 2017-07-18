@@ -11,6 +11,10 @@ const initGetById = require('./routes/getById')
 const initGetList = require('./routes/getList')
 const initPostToList = require('./routes/postToList')
 
+// Operations
+// const insert = require('./insert')
+// const select = require('./select')
+
 module.exports = {
 
 	// Props
@@ -52,11 +56,11 @@ module.exports = {
 		return this
 	},
 
-	initRoutes: function (app, schema) {
-		initGetRoot(app, schema)
-		initGetById(app, schema)
-		initGetList(app, schema)
-		initPostToList(app, schema)
+	initRoutes: function (app, dbPath, schema) {
+		initGetRoot(app, dbPath, schema)
+		initGetById(app, dbPath, schema)
+		initGetList(app, dbPath, schema)
+		initPostToList(app, dbPath, schema)
 		return this
 	},
 
@@ -141,7 +145,7 @@ module.exports = {
 	},
 
 	prepare: function () {
-		return this.prepareApp(this.app).initRoutes(this.app, this.schema)
+		return this.prepareApp(this.app).initRoutes(this.app, this.dbPath, this.schema)
 	}
 
 }

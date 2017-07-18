@@ -1,15 +1,12 @@
 const _ = require('lodash')
-const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
 const select = require('./select')
-const schema = require('../schema')
-const dbFilePath = path.resolve(__dirname, '../db.sql')
 
 module.exports = {
 
-	one: function (resourceType, input) {
+	one: function (dbPath, schema, resourceType, input) {
 		let resource = schema[resourceType]
 
 		// Start with defaults as defined in schema
@@ -40,7 +37,7 @@ module.exports = {
 			try	{
 
 				// Init database connection
-				const db = new Database(dbFilePath, {
+				const db = new Database(dbPath, {
 					readonly: false
 				})
 
@@ -51,7 +48,7 @@ module.exports = {
 				db.close()
 
 				// Fetch the inserted object
-				select.one(resourceType, insertedInfo.lastInsertROWID).then(function (row) {
+				select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID).then(function (row) {
 
 					// Resolve promise
 					resolve(row)

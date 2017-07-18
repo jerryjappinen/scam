@@ -35,6 +35,7 @@ You can also use the key of another resource type as the `type`. In this case th
 - [ ] PUT/UPDATE
 - [ ] DELETE
 - [ ] Error format
+- [ ] Timestamps
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Relations via type
 - [ ] Nesting via $depth

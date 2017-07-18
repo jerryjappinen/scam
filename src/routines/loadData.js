@@ -17,7 +17,7 @@ module.exports = function (dbPath, schema, data) {
 		if (data[resourceType]) {
 			let resourceData = data[resourceType]
 			for (var i = 0; i < resourceData.length; i++) {
-				insert.one(resourceType, resourceData[i])
+				insert.one(dbPath, schema, resourceType, resourceData[i])
 			}
 		}
 

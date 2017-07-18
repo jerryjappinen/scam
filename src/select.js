@@ -2,23 +2,25 @@ const path = require('path')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const schema = require('../schema')
-const dbFilePath = path.resolve(__dirname, '../db.sql')
+const dbPath = path.resolve(__dirname, '../db.sql')
 
 module.exports = {
 
 	// Select an item by ID
-	one: function (resourceType, id) {
-		return this.by(resourceType, {
+	one: function (dbPath, schema, resourceType, id) {
+		return this.by(dbPath, schema, resourceType, {
 			'id': id
 		})
 	},
 
 	// Select item by value of any one field
-	by: function (resourceType, keyValuePairs) {
+	by: function (dbPath, schema, resourceType, keyValuePairs) {
 		let resource = schema[resourceType]
 
+		// Base query
 		let query = squel.select().from(resource.plural)
+
+		// Chain where statements
 		for (let key in keyValuePairs) {
 			let value = keyValuePairs[key]
 			let field = resource.fields[key]
@@ -30,7 +32,7 @@ module.exports = {
 			try	{
 
 				// Init database connection
-				const db = new Database(dbFilePath, {
+				const db = new Database(dbPath, {
 					readonly: true
 				})
 
@@ -49,18 +51,16 @@ module.exports = {
 		})
 	},
 
-	all: function (resourceType) {
+	all: function (dbPath, schema, resourceType) {
 		let resource = schema[resourceType]
 
-		let query = squel.select()
-			.from(resource.plural)
-			.toString()
+		let query = squel.select().from(resource.plural).toString()
 
 		return new Promise(function (resolve, reject) {
 			try	{
 
 				// Init database connection
-				const db = new Database(dbFilePath, {
+				const db = new Database(dbPath, {
 					readonly: true
 				})
 

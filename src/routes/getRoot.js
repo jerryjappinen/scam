@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 // Root
-module.exports = function (app, schema) {
+module.exports = function (app, dbPath, schema) {
 
 	app.get('/', function (request, response) {
 		response.status(200).json({

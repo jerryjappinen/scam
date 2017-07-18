@@ -1,6 +1,6 @@
 const insert = require('../insert')
 
-module.exports = function (app, schema) {
+module.exports = function (app, dbPath, schema) {
 
 	for (let resourceType in schema) {
 		let resource = schema[resourceType]
@@ -12,7 +12,7 @@ module.exports = function (app, schema) {
 				values[requestKey] = request.body[requestKey]
 			}
 
-			insert.one(resourceType, values).then(function (newRowId) {
+			insert.one(dbPath, schema, resourceType, values).then(function (newRowId) {
 
 				// Send out success response
 				response.status(201).json({
