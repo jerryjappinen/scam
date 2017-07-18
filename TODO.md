@@ -1,13 +1,15 @@
 # Todo
 
+- Support promises in transformMany
+
 - [x] Dummy data
 - [ ] Make `required` work (return errors from POST and UPDATE)
 - [ ] PUT/UPDATE
 - [ ] DELETE
 - [ ] Error format
 - [x] Field transformers
-- [x] createdAt timestamps
-- [ ] updatedAt timestamps
+- [x] created timestamps
+- [ ] updated timestamps
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Relations via type
 - [ ] Nesting via `depth` param
@@ -18,3 +20,4 @@
 - [ ] Separate repos for demo and module
 - [ ] Rename from `crude` to something else
 - [ ] Publish in NPM
+- [ ] Allow setting type in singular in schema or use another key for setting reference

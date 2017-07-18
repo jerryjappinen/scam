@@ -4,8 +4,8 @@ module.exports = {
 
 	fields: {
 
-		userId: {
-			type: 'user',
+		user: {
+			type: 'users',
 			required: true
 		},
 

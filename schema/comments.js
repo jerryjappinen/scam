@@ -5,12 +5,12 @@ module.exports = {
 	fields: {
 
 		postId: {
-			type: 'post',
+			type: 'posts',
 			required: true
 		},
 
 		userId: {
-			type: 'user',
+			type: 'users',
 			required: false
 		},
 

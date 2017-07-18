@@ -8,7 +8,13 @@ module.exports = function (crude) {
 		// Register ID getter endpoint
 		crude.app.get('/' + resource.plural + '/:id', function (request, response) {
 
-			select.one(crude.dbPath, crude.schema, resourceType, request.params.id).then(function (row) {
+			select.one(
+				crude.dbPath,
+				crude.schema,
+				resourceType,
+				parseInt(request.params.id),
+				request.query.nest ? true : false
+			).then(function (row) {
 
 				if (row) {
 
@@ -33,6 +39,7 @@ module.exports = function (crude) {
 			}).catch(function (error) {
 
 				// Send out error response
+				// FIXME: hardcoded 500, c'mon!!
 				response.status(500).json({
 					status: 500,
 					timestamp: new Date(),

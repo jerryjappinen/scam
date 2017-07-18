@@ -23,7 +23,7 @@ module.exports = {
 			sqlValue: 'primary key'
 		},
 
-		createdAt: {
+		created: {
 			type: 'timestamp',
 			sqlValue: 'DEFAULT CURRENT_TIMESTAMP'
 		}

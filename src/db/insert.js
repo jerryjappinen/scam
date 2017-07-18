@@ -6,7 +6,7 @@ const select = require('./select')
 
 module.exports = {
 
-	one: function (dbPath, schema, resourceType, input) {
+	one: function (dbPath, schema, resourceType, input, nest) {
 		let resource = schema[resourceType]
 
 		// Start with defaults as defined in schema
@@ -56,7 +56,7 @@ module.exports = {
 
 				// Fetch the inserted object
 				try {
-					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID).then(function (row) {
+					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID, nest).then(function (row) {
 
 						// Resolve original promise
 						resolve(row)

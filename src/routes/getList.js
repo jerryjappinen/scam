@@ -9,7 +9,12 @@ module.exports = function (crude) {
 		// Register list getter endpoint
 		crude.app.get('/' + resource.plural, function (request, response) {
 
-			select.all(crude.dbPath, crude.schema, resourceType).then(function (rows) {
+			select.all(
+				crude.dbPath,
+				crude.schema,
+				resourceType,
+				request.query.nest ? true : false
+			).then(function (rows) {
 
 				// Send out success response
 				response.status(200).json({

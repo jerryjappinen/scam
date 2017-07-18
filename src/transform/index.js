@@ -9,61 +9,93 @@ const transformers = {
 
 
 // Transform one object for being exposed to the outside world
-const transformOne = function (schema, resourceType, row) {
-	let fields = schema[resourceType].fields
+const transformOne = function (dbPath, schema, resourceType, row, nest) {
+	return new Promise(function (resolve, reject) {
+		let fields = schema[resourceType].fields
+		let promises = 0
 
-	for (let key in row) {
-		let value = row[key]
-		let type
+		// NOTE: runtime require is needed here
+		const select = require('../db/select')
 
-		// Field is a native field
-		if (config.nativeFields[key]) {
-			type = config.nativeFields[key].type
+		for (let key in row) {
+			let value = row[key]
+			let type
 
-		// Type defined in schema
-		} else if (fields[key] && fields[key].type) {
-			type = fields[key].type
+			// Field is a native field
+			if (config.nativeFields[key]) {
+				type = config.nativeFields[key].type
 
-		// Default to integer
-		} else {
-			type = config.defaultType
+			// Type defined in schema
+			} else if (fields[key] && fields[key].type) {
+				type = fields[key].type
+
+			// Default to integer
+			} else {
+				type = config.defaultType
+			}
+
+			// Just a regular value: transform if we have a callback function to use
+			if (transformers[type]) {
+				row[key] = transformers[type](value)
+
+			// Type is defined in schema, meaning it's an ID that refers to another resource
+			// FIXME
+			// - these values are stored as IDs
+			// - at this point, `select` should have replaced the ID with the actual object in `row`
+			// - but currently this is not implemented, so isPlainObject will never be true
+			} else if (_.includes(_.keys(schema), type) && nest) {
+				promises++
+
+				// FIXME: this is probably not the best place to do this
+				// FIXME: hardcoded nest to be false
+				// NOTE: select will call transformOne as well, so the child object will be transformed correctly
+				select.one(dbPath, schema, type, value, false).then(function (childRow) {
+					row[key] = childRow
+
+					promises--
+					if (!promises) {
+						resolve(row)
+					}
+
+				})
+
+			}
+
 		}
 
-		// Type is defined in schema, meaning it's an ID that refers to another resource
-		// FIXME
-		// - these values are stored as IDs
-		// - at this point, `select` should have replaced the ID with the actual object in `row`
-		// - but currently this is not implemented, so isPlainObject will never be true
-		if (
-			_.includes(_.keys(schema), type) &&
-			_.isPlainObject(value)
-		) {
-			row[key] = transformOne(schema, type, value)
-
-		// Just a regular value: transform if we have a callback function to use
-		} else if (transformers[type]) {
-			row[key] = transformers[type](value)
+		if (!promises) {
+			resolve(row)
 		}
 
-	}
-	return row
+	})
 }
 
 
 
 // Run many objects theough appropriate transformations
-const transformMany = function (schema, resourceType, rows) {
-	let newRows = []
-	for (var i = 0; i < rows.length; i++) {
-		newRows.push(transformOne(schema, resourceType, rows[i]))
-	}
-	return newRows
+const transformMany = function (dbPath, schema, resourceType, rows, nest) {
+	return new Promise(function (resolve, reject) {
+		let promises = []
+
+		for (var i = 0; i < rows.length; i++) {
+			promises.push(transformOne(dbPath, schema, resourceType, rows[i], nest))
+		}
+
+		Promise.all(promises).then(function (results) {
+			resolve(results)
+		}).catch(function (errors) {
+			reject(errors)
+		})
+
+	})
 }
 
 // Transform row(s) for hte outside world
-module.exports = function (schema, resourceType, row) {
+module.exports = function (dbPath, schema, resourceType, row, nest) {
+
 	if (row instanceof Array) {
-		return transformMany(schema, resourceType, row)
+		return transformMany(dbPath, schema, resourceType, row, nest)
 	}
-	return transformOne(schema, resourceType, row)
+
+	return transformOne(dbPath, schema, resourceType, row, nest)
 }
