@@ -18,9 +18,10 @@ module.exports = {
 	selectBy: function (resourceType, key, value) {
 		let resource = resources[resourceType];
 		let field = resource.fields[key];
+
 		let query = squel.select()
 			.from(resource.plural)
-			.where(key + '=' + (field && field.type) === 'string' ? '"' + value + '"' : value)
+			.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
 			.toString()
 
 		return new Promise(function (resolve, reject) {
@@ -31,11 +32,11 @@ module.exports = {
 				reject(error)
 			}
 		})
-
 	},
 
 	selectAll: function (resourceType) {
 		let resource = resources[resourceType];
+
 		let query = squel.select()
 			.from(resource.plural)
 			.toString()
@@ -48,7 +49,6 @@ module.exports = {
 				reject(error)
 			}
 		})
-
 	}
 
 }
