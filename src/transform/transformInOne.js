@@ -4,7 +4,7 @@ const transformersIn = {
 	array: require('./transformInArray')
 }
 
-const getRawType = require('./getRawType')
+const getRawType = require('../helpers/getRawType')
 
 // Transform one object for inserting into database
 module.exports = function (dbPath, schema, resourceType, values) {

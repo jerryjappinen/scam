@@ -1,7 +1,7 @@
 const normalizeType = require('./normalizeType')
 
 // Normalize type of a field, without returning a resource type
-module.exports = function (fieldName, resourceType, schema, config) {
+module.exports = function (fieldName, resourceType, schema) {
 
 	// If the field is a reference to another resource, we need the field type used when storing it
 	// List of references to other resources
@@ -13,5 +13,5 @@ module.exports = function (fieldName, resourceType, schema, config) {
 		return 'integer'
 	}
 
-	return normalizeType(fieldName, resourceType, schema, config)
+	return normalizeType(fieldName, resourceType, schema)
 }

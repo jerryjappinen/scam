@@ -10,7 +10,8 @@
 - [x] Rename from `scam` to something else
 - [x] Publish in NPM
 - [x] Sorting in lists via `sort` param
-- [ ] Filtering in lists via any non-reserved field param in query
+- [x] Filtering in lists via any non-reserved field param in query
+- [x] Better `normalizeWhereValue`
 - [ ] Cache in config and schema
 - [ ] Allow setting type in singular in schema or use another key for setting reference
 - [ ] PUT/UPDATE

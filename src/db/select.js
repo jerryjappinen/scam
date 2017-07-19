@@ -3,6 +3,8 @@ const Database = require('better-sqlite3')
 const squel = require('squel')
 
 const config = require('../config')
+const normalizeWhereArray = require('../helpers/normalizeWhereArray')
+const normalizeWhereValue = require('../helpers/normalizeWhereValue')
 const transformOutOne = require('../transform/transformOutOne')
 const transformOutMany = require('../transform/transformOutMany')
 
@@ -57,40 +59,38 @@ module.exports = {
 	},
 
 	all: function (dbPath, schema, resourceType, where, nest, sort) {
+
 		let resource = schema.resourceTypes[resourceType]
 
 		let query = squel.select().from(resource.plural)
 
-		// Strings need quote treatment
-		let normalizeWhereValue = function (field, value) {
-			return field && field.type === 'string' ? '"' + value + '"' : value
-		}
-
 		// Chain where statements
-		for (let key in where) {
-			let value = where[key]
-			let field = resource.fields[key]
+		for (let fieldName in where) {
+			let value = normalizeWhereArray(fieldName, resourceType, schema, where[fieldName])
+			let field = resource.fields[fieldName]
 
 			// Many possible values provided, using OR to select all matches
 			if (value instanceof Array) {
 
 				// Normalize each value item
 				let values = _.map(value, function (singleValue) {
-					return normalizeWhereValue(field, singleValue)
+					if (field) {
+						return normalizeWhereValue(fieldName, resourceType, schema, singleValue)
+					}
+					return singleValue
 				})
 
 				// Compose OR query
-				query = query.where(key + ' IN (' + values.join(', ') + ')')
+				query = query.where(fieldName + ' IN (' + values.join(', ') + ')')
 
 			// Just one
 			} else {
-				query = query.where(key + ' = ' + normalizeWhereValue(field, value))
+				query = query.where(fieldName + ' = ' + normalizeWhereValue(fieldName, resourceType, schema, value))
 			}
 
 		}
 
-		// Sorting
-
+		// Combine sorting rules
 		if (sort && (_.isString(sort) || _.isArray(sort)) && sort.length) {
 
 			// Normalize sort so we always deal with an array of sort values

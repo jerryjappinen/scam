@@ -14,7 +14,7 @@ module.exports = {
 
 	// When field type is not explicitly defined in schema, we default to this
 	defaultType: 'integer',
-	defaultSort: '-id',
+	defaultSort: 'id',
 	reservedParameterNames: [
 		'sort',
 		'nest',

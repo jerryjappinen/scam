@@ -5,8 +5,8 @@ const transformersOut = {
 	timestamp: require('./transformOutTimestamp')
 }
 
-const getRawType = require('./getRawType')
-const normalizeType = require('./normalizeType')
+const getRawType = require('../helpers/getRawType')
+const normalizeType = require('../helpers/normalizeType')
 
 // Transform one object for being exposed to the outside world
 module.exports = function (dbPath, schema, resourceType, row, nest) {

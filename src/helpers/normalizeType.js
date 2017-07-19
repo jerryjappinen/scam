@@ -1,6 +1,8 @@
+const config = require('../config')
+
 // Normalize type of a field
 // Returns internal type (not SQL)
-module.exports = function (fieldName, resourceType, schema, config) {
+module.exports = function (fieldName, resourceType, schema) {
 	let fields = schema.resourceTypes[resourceType].fields
 	let type
 
