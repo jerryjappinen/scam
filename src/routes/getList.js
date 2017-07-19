@@ -1,17 +1,17 @@
 const select = require('../db/select')
 
 // Generate list endpoints in a loop
-module.exports = function (root) {
+module.exports = function (scam) {
 
-	for (let resourceType in root.schema) {
-		let resource = root.schema[resourceType]
+	for (let resourceType in scam.schema) {
+		let resource = scam.schema[resourceType]
 
 		// Register list getter endpoint
-		root.app.get('/' + resource.plural, function (request, response) {
+		scam.app.get('/' + resource.plural, function (request, response) {
 
 			select.all(
-				root.dbPath,
-				root.schema,
+				scam.dbPath,
+				scam.schema,
 				resourceType,
 				request.query.nest ? true : false
 			).then(function (rows) {

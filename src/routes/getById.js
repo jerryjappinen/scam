@@ -1,16 +1,16 @@
 const select = require('../db/select')
 
-module.exports = function (root) {
+module.exports = function (scam) {
 
-	for (let resourceType in root.schema) {
-		let resource = root.schema[resourceType]
+	for (let resourceType in scam.schema) {
+		let resource = scam.schema[resourceType]
 
 		// Register ID getter endpoint
-		root.app.get('/' + resource.plural + '/:id', function (request, response) {
+		scam.app.get('/' + resource.plural + '/:id', function (request, response) {
 
 			select.one(
-				root.dbPath,
-				root.schema,
+				scam.dbPath,
+				scam.schema,
 				resourceType,
 				parseInt(request.params.id),
 				request.query.nest ? true : false

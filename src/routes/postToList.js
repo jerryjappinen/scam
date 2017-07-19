@@ -1,18 +1,18 @@
 const insert = require('../db/insert')
 
-module.exports = function (root) {
+module.exports = function (scam) {
 
-	for (let resourceType in root.schema) {
-		let resource = root.schema[resourceType]
+	for (let resourceType in scam.schema) {
+		let resource = scam.schema[resourceType]
 
 		// Register post endpoint
-		root.app.post('/' + resource.plural, function (request, response) {
+		scam.app.post('/' + resource.plural, function (request, response) {
 			let values = {}
 			for (let requestKey in request.body) {
 				values[requestKey] = request.body[requestKey]
 			}
 
-			insert.one(root.dbPath, root.schema, resourceType, values).then(function (newRowId) {
+			insert.one(scam.dbPath, scam.schema, resourceType, values).then(function (newRowId) {
 
 				// Send out success response
 				response.status(201).json({
