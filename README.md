@@ -1,3 +1,5 @@
+**Do not use Scam yet!** It's not ready for prime time and will see a healthy number of breaking changes very soon.
+
 # Scam
 
 Simple schema-based CRUD app bootstrapper on node and SQLite.
