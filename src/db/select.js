@@ -2,6 +2,7 @@ const _ = require('lodash')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
+const config = require('../config')
 const transformOutOne = require('../transform/transformOutOne')
 const transformOutMany = require('../transform/transformOutMany')
 
@@ -55,7 +56,7 @@ module.exports = {
 		})
 	},
 
-	all: function (dbPath, schema, resourceType, where, nest) {
+	all: function (dbPath, schema, resourceType, where, nest, sort) {
 		let resource = schema.resourceTypes[resourceType]
 
 		let query = squel.select().from(resource.plural)
@@ -73,14 +74,58 @@ module.exports = {
 			// Many possible values provided, using OR to select all matches
 			if (value instanceof Array) {
 
+				// Normalize each value item
 				let values = _.map(value, function (singleValue) {
 					return normalizeWhereValue(field, singleValue)
 				})
+
+				// Compose OR query
 				query = query.where(key + ' IN (' + values.join(', ') + ')')
 
 			// Just one
 			} else {
 				query = query.where(key + ' = ' + normalizeWhereValue(field, value))
+			}
+
+		}
+
+		// Sorting
+
+		if (sort && (_.isString(sort) || _.isArray(sort)) && sort.length) {
+
+			// Normalize sort so we always deal with an array of sort values
+			if (!(sort instanceof Array)) {
+				sort = [sort]
+			}
+
+			// Always include with default sort order, unless ID is in sort already
+			let defaultSort = config.defaultSort
+			let defaultSortReverse = defaultSort.substr(0, 1) === '-' ? defaultSort.substr(1) : '-' + defaultSort
+
+			// Add default sort to the sorting rules if it's not there yet
+			if (
+				!_.includes(sort, defaultSort) &&
+				!_.includes(sort, defaultSortReverse)
+			) {
+				sort = [].concat(sort, [defaultSort])
+			}
+
+		} else {
+			sort = [config.defaultSort]
+		}
+
+		// Apply sorting with "id, -name" syntax support
+		for (let i = 0; i < sort.length; i++) {
+			let column = sort[i]
+
+			// Desc
+			if (column.substr(0, 1) === '-') {
+				column = column.substr(1)
+				query.order(column, false)
+
+			// ASC
+			} else {
+				query.order(column)
 			}
 
 		}

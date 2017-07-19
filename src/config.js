@@ -14,6 +14,7 @@ module.exports = {
 
 	// When field type is not explicitly defined in schema, we default to this
 	defaultType: 'integer',
+	defaultSort: '-id',
 
 	// Some fields are automatically added to the tables, and do not have to be defined in schema
 	// FIXME: if they are, we have a problem

@@ -9,12 +9,15 @@ module.exports = function (scam) {
 		// Register list getter endpoint
 		scam.app.get('/' + resource.plural, function (request, response) {
 
+			console.log(request.query.sort)
+
 			select.all(
 				scam.dbPath,
 				scam.schema,
 				resourceType,
 				{},
-				request.query.nest ? true : false
+				request.query.nest ? true : false,
+				request.query.sort ? request.query.sort.split(',') : []
 			).then(function (rows) {
 
 				// Send out success response
