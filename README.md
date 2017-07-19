@@ -2,6 +2,10 @@
 
 Simple schema-based CRUD app bootstrapper on node and SQLite.
 
+- Source: https://github.com/Eiskis/scam
+- Demo: https://scam-demo.herokuapp.com/
+- Demo source: https://github.com/Eiskis/scam
+
 ## Usage
 
 ### Schema
@@ -68,6 +72,10 @@ npm run reload
 # Start server
 npm run start
 ```
+
+### Deployment
+
+You can deploy a Scam API just like any other express app. The quickest way is to host your repo on GitHub and connect to Heroku, which will
 
 ## Reference
 
