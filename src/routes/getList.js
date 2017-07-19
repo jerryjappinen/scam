@@ -9,8 +9,6 @@ module.exports = function (scam) {
 		// Register list getter endpoint
 		scam.app.get('/' + resource.plural, function (request, response) {
 
-			console.log(request.query.sort)
-
 			select.all(
 				scam.dbPath,
 				scam.schema,
