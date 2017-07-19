@@ -17,7 +17,6 @@ module.exports = function (dbPath, schema, resourceType, row, nest) {
 		const select = require('../db/select')
 
 		for (let fieldName in row) {
-			let value = row[fieldName]
 
 			// Something like string, array, user or posts
 			let type = normalizeType(fieldName, resourceType, schema, config)
@@ -25,17 +24,21 @@ module.exports = function (dbPath, schema, resourceType, row, nest) {
 			// Something like string or array, never user or posts
 			let rawType = getRawType(fieldName, resourceType, schema, config)
 
+			// ALWAYS transform by raw type first (so arrays and integers get treated even if they refer to resources)
+			if (transformersOut[rawType]) {
+				row[fieldName] = transformersOut[rawType](row[fieldName])
+			}
+
+			let value = row[fieldName]
+
+			// If user asked to nest, and field is resource
 			// Type might be defined in schema, meaning it's an ID that refers to another resource
 			// Singular: one child object
-			console.log('transformOutOne 1', fieldName, nest, type, rawType)
-
 			if (nest && schema.singulars[type]) {
 				promises++
 
 				// Select needs the type in plural
 				let pluralType = schema.singulars[type]
-
-				console.log('transformOutOne 2', type, pluralType, rawType)
 
 				// Select one object
 				select.one(
@@ -63,8 +66,6 @@ module.exports = function (dbPath, schema, resourceType, row, nest) {
 			} else if (nest && schema.plurals[type]) {
 				promises++
 
-				console.log('transformOutOne 3', type, rawType)
-
 				// Select one object
 				select.all(
 					dbPath,
@@ -89,11 +90,6 @@ module.exports = function (dbPath, schema, resourceType, row, nest) {
 
 				})
 
-			// Just a regular value: transform if we have a callback function to use
-			} else {
-				if (transformersOut[rawType]) {
-					row[fieldName] = transformersOut[rawType](value)
-				}
 			}
 
 		}

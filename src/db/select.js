@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
@@ -59,11 +60,29 @@ module.exports = {
 
 		let query = squel.select().from(resource.plural)
 
+		// Strings need quote treatment
+		let normalizeWhereValue = function (field, value) {
+			return field && field.type === 'string' ? '"' + value + '"' : value
+		}
+
 		// Chain where statements
 		for (let key in where) {
 			let value = where[key]
 			let field = resource.fields[key]
-			query = query.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
+
+			// Many possible values provided, using OR to select all matches
+			if (value instanceof Array) {
+
+				let values = _.map(value, function (singleValue) {
+					return normalizeWhereValue(field, singleValue)
+				})
+				query = query.where(key + ' IN (' + values.join(', ') + ')')
+
+			// Just one
+			} else {
+				query = query.where(key + ' = ' + normalizeWhereValue(field, value))
+			}
+
 		}
 
 		return new Promise(function (resolve, reject) {

@@ -21,7 +21,7 @@
 - [ ] `updated` timestamp
 - [ ] Make `required` work (return errors from POST and UPDATE)
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
-- [ ] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
+- [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
 - [ ] Control nesting level via `depth` param (have to control circular references somehow)
