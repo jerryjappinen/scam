@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "repository": {
-		"type": "git",
-		"url": "git@github.com:Eiskis/scam.git"
-	},
+    "type": "git",
+    "url": "git@github.com:Eiskis/scam.git"
+  },
   "scripts": {
     "reload": "npm run clear && npm run init && npm run load",
     "clear": "node ./index.js clear",
@@ -22,7 +22,7 @@
   "dependencies": {
     "better-sqlite3": "^3.1.1",
     "body-parser": "^1.17.2",
-    "cors": "^2.8.3",
+    "cors": "^2.8.4",
     "express": "^4.15.3",
     "lodash": "^4.17.4",
     "nocache": "^2.0.0",

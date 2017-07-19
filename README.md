@@ -1,4 +1,4 @@
-# Crude
+# Scam
 
 Simple schema-based CRUD app bootstrapper on node and SQLite.
 
