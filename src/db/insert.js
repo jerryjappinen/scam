@@ -60,7 +60,7 @@ module.exports = {
 				})
 
 				// Execute query
-				let insertedInfo = db.prepare(query.toString() ).run(finalValues)
+				let insertedInfo = db.prepare(query.toString()).run(finalValues)
 
 				// Close local database connection
 				db.close()
