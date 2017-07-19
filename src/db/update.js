@@ -1,11 +1,8 @@
-const _ = require('lodash')
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const select = require('./select')
-
+const config = require('../config')
 const transformInOne = require('../transform/transformInOne')
-// const transformInMany = require('../transform/transformInMany')
 
 module.exports = {
 
@@ -21,14 +18,7 @@ module.exports = {
 		)
 
 		// Prepare query with placeholders (values are entered in run() below)
-		let query = squel.update({
-
-			// Overriding default string formatter because we don't want the placeholders escaped
-			stringFormatter: function (string) {
-				return string
-			}
-
-		}).table(resource.plural).where('id = ' + id)
+		let query = squel.update(config.squelWriteOptions).table(resource.plural).where('id = ' + id)
 
 		for (let key in finalValues) {
 			query = query.set(key, '@' + key)
@@ -48,19 +38,7 @@ module.exports = {
 				// Close local database connection
 				db.close()
 
-				// Fetch the inserted object
-				// FIXME: move this to route handler
-				try {
-					select.one(dbPath, schema, resourceType, id, false).then(function (row) {
-
-						// Resolve original promise
-						resolve(row)
-
-					})
-
-				} catch (error) {
-					reject(error)
-				}
+				resolve(id)
 
 			} catch (error) {
 				reject(error)

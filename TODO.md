@@ -12,15 +12,17 @@
 - [x] Sorting in lists via `sort` param
 - [x] Filtering in lists via any non-reserved field param in query
 - [x] Better `normalizeWhereValue`
+- [x] PUT/UPDATE
+- [ ] Move selection after insert/update to route handlers
+- [ ] DELETE
 - [ ] Cache in config and schema
 - [ ] Allow setting type in singular in schema or use another key for setting reference
-- [x] PUT/UPDATE
 - [ ] Separate repos for demo and module
-- [ ] DELETE
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
 - [ ] `updated` timestamp
 - [ ] Make `required` work (return errors from POST and UPDATE)
+- [ ] Make some kind of response formatter for success and error responses
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
 - [ ] Set up test coverage

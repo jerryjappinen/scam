@@ -38,6 +38,15 @@ module.exports = {
 			sqlValue: 'DEFAULT CURRENT_TIMESTAMP'
 		}
 
+	},
+
+	// We use these in the query formatter for insert/update
+	squelWriteOptions: {
+
+		// Overriding default string formatter because we don't want the placeholders escaped
+		stringFormatter: function (string) {
+			return string
+		}
 	}
 
 }
