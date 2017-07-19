@@ -1,7 +1,8 @@
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const transformOut = require('../transform/out')
+const transformOutOne = require('../transform/transformOutOne')
+const transformOutMany = require('../transform/transformOutMany')
 
 module.exports = {
 
@@ -41,7 +42,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				transformOut(dbPath, schema, resourceType, row, nest).then(function (row) {
+				transformOutOne(dbPath, schema, resourceType, row, nest).then(function (row) {
 					resolve(row)
 				}).catch(function (error) {
 					reject(error)
@@ -80,7 +81,7 @@ module.exports = {
 				db.close()
 
 				// Resolve promise
-				transformOut(dbPath, schema, resourceType, rows, nest).then(function (rows) {
+				transformOutMany(dbPath, schema, resourceType, rows, nest).then(function (rows) {
 					resolve(rows)
 				}).catch(function (error) {
 					reject(error)

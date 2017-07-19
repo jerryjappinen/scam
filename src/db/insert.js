@@ -4,11 +4,12 @@ const squel = require('squel')
 
 const select = require('./select')
 
-const transformIn = require('../transform/in')
+const transformInOne = require('../transform/transformInOne')
+// const transformInMany = require('../transform/transformInMany')
 
 module.exports = {
 
-	one: function (dbPath, schema, resourceType, input, nest) {
+	one: function (dbPath, schema, resourceType, input) {
 		let resource = schema.resourceTypes[resourceType]
 
 		// Start with defaults as defined in schema
@@ -26,7 +27,7 @@ module.exports = {
 		}
 
 		// Override with user input, and prepare for SQL
-		let finalValues = transformIn(
+		let finalValues = transformInOne(
 			dbPath,
 			schema,
 			resourceType,
@@ -66,7 +67,7 @@ module.exports = {
 
 				// Fetch the inserted object
 				try {
-					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID, nest).then(function (row) {
+					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID, false).then(function (row) {
 
 						// Resolve original promise
 						resolve(row)
