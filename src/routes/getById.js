@@ -1,16 +1,16 @@
 const select = require('../db/select')
 
-module.exports = function (crude) {
+module.exports = function (root) {
 
-	for (let resourceType in crude.schema) {
-		let resource = crude.schema[resourceType]
+	for (let resourceType in root.schema) {
+		let resource = root.schema[resourceType]
 
 		// Register ID getter endpoint
-		crude.app.get('/' + resource.plural + '/:id', function (request, response) {
+		root.app.get('/' + resource.plural + '/:id', function (request, response) {
 
 			select.one(
-				crude.dbPath,
-				crude.schema,
+				root.dbPath,
+				root.schema,
 				resourceType,
 				parseInt(request.params.id),
 				request.query.nest ? true : false

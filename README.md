@@ -4,17 +4,72 @@ Simple schema-based CRUD app bootstrapper on node and SQLite.
 
 ## Usage
 
+### Schema
+
 Define your schema under `schema/`.
 
 ```js
 {
-	singular: 'foo',
-	plural: 'foos',
+	singular: 'post',
+	plural: 'posts',
 	fields: [
-		...
+		name: {
+			type: 'string'
+		},
+		body: {
+			type: 'string'
+		},
+		user: {
+			type: 'user' // Note singular
+		},
+		comments: {
+			type: 'comments' // Note plural
+		}
 	]
 }
 ```
+
+Remember to export each dummy data file in `index.js`.
+
+### Data
+
+Define dummy data under `data/` as `.json` or `.js`:
+
+`data/posts.json`
+
+```json
+[
+	{
+		"name": "Some Name",
+		"body": "Body text body text body text",
+		"user": 1,
+		"comments": [1, 2, 3]
+	}
+]
+```
+
+Remember to export each dummy data file in `index.js`.
+
+### Scripts
+
+```sh
+# Delete DB if it exists
+npm run clear
+
+# Init new DB based on schema
+npm run init
+
+# Load dummy data
+npm run load
+
+# All of the above
+npm run reload
+
+# Start server
+npm run start
+```
+
+## Reference
 
 ### Field types
 

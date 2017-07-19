@@ -1,15 +1,12 @@
-const _ = require('lodash')
+module.exports = function (root) {
 
-// Root
-module.exports = function (crude) {
-
-	crude.app.get('/', function (request, response) {
+	root.app.get('/', function (request, response) {
 		response.status(200).json({
 			status: 200,
 			body: {
 				message: 'Hello world!',
-				endpoints: crude.endpoints,
-				schema: crude.schema
+				endpoints: root.endpoints,
+				schema: root.schema
 			}
 		})
 	})

@@ -1,4 +1,4 @@
-const config = require('./crude.json')
+const config = require('./scam.json')
 
 // Treat paths
 const path = require('path')
@@ -8,20 +8,20 @@ const dbPath = path.resolve(__dirname, config.db)
 
 // Deps
 const express = require('express')
-const crude = require('./src')
+const scam = require('./src')
 
 // Optional middleware
 const cors = require('cors')
 const nocache = require('nocache')
 
-// Setup
+// Express app setup
 const app = express()
 app.set('port', (process.env.PORT || 3333))
 app.use(cors())
 app.use(nocache())
 
-// Set up crude
-crude.init(app, dbPath, schemaPath, dataPath)
+// Setting up Scam
+scam.init(app, dbPath, schemaPath, dataPath)
 
 // Specific command defined (other than start)
 
@@ -29,15 +29,15 @@ crude.init(app, dbPath, schemaPath, dataPath)
 switch (process.argv[2]) {
 
 case 'clear':
-	crude.clearDatabase()
+	scam.clearDatabase()
 	break
 
 case 'init':
-	crude.setupDatabase()
+	scam.setupDatabase()
 	break
 
 case 'load':
-	crude.loadData()
+	scam.loadData()
 	break
 
 // Start the server
@@ -48,11 +48,11 @@ default:
 	app.listen(app.get('port'), function () {
 		let url = 'http://localhost:' + app.get('port')
 
-		console.log('Crude API is now running with these endpoints:')
+		console.log('scam API is now running with these endpoints:')
 
 		let lastPath
-		for (let key in crude.endpoints) {
-			let endpoint = crude.endpoints[key]
+		for (let key in scam.endpoints) {
+			let endpoint = scam.endpoints[key]
 			let method = endpoint.method.toUpperCase()
 			let path = url + endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
 

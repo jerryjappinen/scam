@@ -1,0 +1,6 @@
+{
+	"cache": 0,
+	"data": "data/",
+	"schema": "schema/",
+	"db": "db/db.sql"
+}
