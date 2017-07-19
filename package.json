@@ -10,7 +10,9 @@
     "load": "node ./index.js load",
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
-    "lint": "eslint --ext .js src scripts"
+    "lint": "eslint --ext .js src scripts",
+    "tape": "node ./test/tape.js",
+    "test": "mocha --timeout 10000"
   },
   "author": "",
   "dependencies": {
@@ -23,10 +25,16 @@
     "squel": "^5.11.1"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
+    "blue-tape": "^1.0.0",
+    "chai": "^4.1.0",
+    "chai-http": "^3.0.0",
     "eslint": "^4.2.0",
+    "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
+    "tape": "^4.7.0"
   },
   "false": {}
 }

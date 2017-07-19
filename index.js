@@ -24,32 +24,24 @@ app.use(nocache())
 crude.init(app, dbPath, schemaPath, dataPath)
 
 // Specific command defined (other than start)
-let command = process.argv[2]
-if (command && command !== 'start') {
 
-	// List of supported commands
-	switch (command) {
+// List of supported commands
+switch (process.argv[2]) {
 
-	case 'clear':
-		crude.clearDatabase()
-		break
+case 'clear':
+	crude.clearDatabase()
+	break
 
-	case 'init':
-		crude.setupDatabase()
-		break
+case 'init':
+	crude.setupDatabase()
+	break
 
-	case 'load':
-		crude.loadData()
-		break
-
-	default:
-		console.log('Unsupported command passed. Try "clear", "init" or "load"')
-		break
-
-	}
+case 'load':
+	crude.loadData()
+	break
 
 // Start the server
-} else {
+default:
 
 	// Start app with some debug info
 	const chalk = require('chalk')
@@ -81,4 +73,5 @@ if (command && command !== 'start') {
 
 	})
 
+	break
 }

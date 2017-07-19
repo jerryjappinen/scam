@@ -21,4 +21,7 @@
 - [ ] Rename from `crude` to something else
 - [ ] Publish in NPM
 - [ ] Allow setting type in singular in schema or use another key for setting reference
-- [ ] Support nested lists (IDs and/or expanded, singular vs. plural)
+- [ ] Support nested lists (IDs and/or expanded, singular vs. plural, using `select.all`)
+- [ ] Cache in config and schema
+- [ ] Tests
+- [ ] Pagination (limits and offsets)
