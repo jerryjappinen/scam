@@ -9,44 +9,26 @@ const transformInOne = require('../transform/transformInOne')
 
 module.exports = {
 
-	one: function (dbPath, schema, resourceType, input) {
+	one: function (dbPath, schema, resourceType, id, input) {
 		let resource = schema.resourceTypes[resourceType]
-
-		// Start with defaults as defined in schema
-		let defaults = {}
-		for (let schemaKey in resource.fields) {
-
-			// Default provided
-			if (resource.fields.default !== undefined) {
-				defaults[schemaKey] = resource.fields[schemaKey].default
-
-			// NULL value
-			} else {
-				defaults[schemaKey] = null
-			}
-		}
 
 		// Override with user input, and prepare for SQL
 		let finalValues = transformInOne(
 			dbPath,
 			schema,
 			resourceType,
-			_.merge(
-				{},
-				defaults,
-				input
-			)
+			input
 		)
 
 		// Prepare query with placeholders (values are entered in run() below)
-		let query = squel.insert({
+		let query = squel.update({
 
 			// Overriding default string formatter because we don't want the placeholders escaped
 			stringFormatter: function (string) {
 				return string
 			}
 
-		}).into(resource.plural)
+		}).table(resource.plural).where('id = ' + id)
 
 		for (let key in finalValues) {
 			query = query.set(key, '@' + key)
@@ -61,7 +43,7 @@ module.exports = {
 				})
 
 				// Execute query
-				let insertedInfo = db.prepare(query.toString()).run(finalValues)
+				db.prepare(query.toString()).run(finalValues)
 
 				// Close local database connection
 				db.close()
@@ -69,7 +51,7 @@ module.exports = {
 				// Fetch the inserted object
 				// FIXME: move this to route handler
 				try {
-					select.one(dbPath, schema, resourceType, insertedInfo.lastInsertROWID, false).then(function (row) {
+					select.one(dbPath, schema, resourceType, id, false).then(function (row) {
 
 						// Resolve original promise
 						resolve(row)

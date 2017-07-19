@@ -1,25 +1,31 @@
-const insert = require('../db/insert')
+const update = require('../db/update')
 
 module.exports = function (scam) {
 
 	for (let resourceType in scam.schema.resourceTypes) {
 		let resource = scam.schema.resourceTypes[resourceType]
 
-		// Register post endpoint
-		scam.app.post('/' + resource.plural, function (request, response) {
+		// Register update endpoint
+		scam.app.put('/' + resource.plural + '/:id', function (request, response) {
 
 			let values = {}
 			for (let requestKey in request.body) {
 				values[requestKey] = request.body[requestKey]
 			}
 
-			insert.one(scam.dbPath, scam.schema, resourceType, values).then(function (newRow) {
+			update.one(
+				scam.dbPath,
+				scam.schema,
+				resourceType,
+				parseInt(request.params.id),
+				values
+			).then(function (row) {
 
 				// Send out success response
-				response.status(201).json({
-					status: 201,
+				response.status(200).json({
+					status: 200,
 					timestamp: new Date(),
-					body: newRow
+					body: row
 				})
 
 			}).catch(function (error) {

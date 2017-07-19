@@ -9,6 +9,7 @@ const loadData = require('./routines/loadData')
 const initGetRoot = require('./routes/getRoot')
 const initGetById = require('./routes/getById')
 const initGetList = require('./routes/getList')
+const initPutById = require('./routes/putById')
 const initPostToList = require('./routes/postToList')
 
 module.exports = {
@@ -71,6 +72,7 @@ module.exports = {
 		initGetById(this)
 		initGetList(this)
 		initPostToList(this)
+		initPutById(this)
 		return this
 	},
 
