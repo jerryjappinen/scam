@@ -37,7 +37,20 @@ module.exports = {
 	},
 
 	setSchema: function (schemaPath) {
-		this.schema = require(schemaPath)
+		let schema = {
+			plurals: {},
+			singulars: {},
+			resourceTypes: require(schemaPath)
+		}
+
+		// Generate mappings between singular and plural, since keys are stored only in the latter format
+		for (let key in schema.resourceTypes) {
+			let resource = schema.resourceTypes[key]
+			schema.plurals[key] = resource.singular
+			schema.singulars[resource.singular] = key
+		}
+
+		this.schema = schema
 		return this
 	},
 
@@ -73,8 +86,8 @@ module.exports = {
 			}
 		]
 
-		for (let key in this.schema) {
-			let path = this.schema[key].plural
+		for (let key in this.schema.resourceTypes) {
+			let path = this.schema.resourceTypes[key].plural
 
 			// GET list
 			endpoints.push({

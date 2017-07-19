@@ -3,8 +3,8 @@ const select = require('../db/select')
 // Generate list endpoints in a loop
 module.exports = function (scam) {
 
-	for (let resourceType in scam.schema) {
-		let resource = scam.schema[resourceType]
+	for (let resourceType in scam.schema.resourceTypes) {
+		let resource = scam.schema.resourceTypes[resourceType]
 
 		// Register list getter endpoint
 		scam.app.get('/' + resource.plural, function (request, response) {
@@ -13,6 +13,7 @@ module.exports = function (scam) {
 				scam.dbPath,
 				scam.schema,
 				resourceType,
+				{},
 				request.query.nest ? true : false
 			).then(function (rows) {
 

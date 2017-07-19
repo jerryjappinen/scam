@@ -10,20 +10,31 @@ module.exports = function (dbPath, schema) {
 	})
 
 	// Set up each resource
-	for (let resourceType in schema) {
-		let resource = schema[resourceType]
+	for (let resourceType in schema.resourceTypes) {
+		let resource = schema.resourceTypes[resourceType]
 		let columnDefinitions = []
 
 		// Generate columns for SQL
 		for (let fieldName in resource.fields) {
 			let field = resource.fields[fieldName]
-			let type = config.sqlTypes[config.defaultType]
 
+			// Default type
+			let sqlType = config.sqlTypes[config.defaultType]
+
+			// Type with an SQL type mapping set in schema
 			if (config.sqlTypes[field.type]) {
-				type = config.sqlTypes[field.type]
+				sqlType = config.sqlTypes[field.type]
+
+			// Reference to other resource: singular
+			} else if (schema.singulars[field.type]) {
+				sqlType = config.sqlTypes['integer']
+
+			// Reference to other resource: plural
+			} else if (schema.plurals[field.type]) {
+				sqlType = config.sqlTypes['array']
 			}
 
-			columnDefinitions.push(fieldName + ' ' + type)
+			columnDefinitions.push(fieldName + ' ' + sqlType)
 		}
 
 		// Compose SQL query for each native field

@@ -89,6 +89,7 @@ The following raw types are supported:
 - `string`
 - `float`
 - `boolean`
+- `array` (will be stored as string (of JSON) in DB)
 - `date`
 - `time`
 - `timestamp`

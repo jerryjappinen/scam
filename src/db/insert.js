@@ -4,10 +4,12 @@ const squel = require('squel')
 
 const select = require('./select')
 
+const transformIn = require('../transform/in')
+
 module.exports = {
 
 	one: function (dbPath, schema, resourceType, input, nest) {
-		let resource = schema[resourceType]
+		let resource = schema.resourceTypes[resourceType]
 
 		// Start with defaults as defined in schema
 		let defaults = {}
@@ -23,8 +25,17 @@ module.exports = {
 			}
 		}
 
-		// Override with user input
-		let finalValues = _.merge({}, defaults, input)
+		// Override with user input, and prepare for SQL
+		let finalValues = transformIn(
+			dbPath,
+			schema,
+			resourceType,
+			_.merge(
+				{},
+				defaults,
+				input
+			)
+		)
 
 		// Prepare query with placeholders (values are entered in run() below)
 		let query = squel.insert({
@@ -38,7 +49,6 @@ module.exports = {
 		for (let key in finalValues) {
 			query = query.set(key, '@' + key)
 		}
-		query = query.toString()
 
 		return new Promise(function (resolve, reject) {
 			try	{
@@ -49,7 +59,7 @@ module.exports = {
 				})
 
 				// Execute query
-				let insertedInfo = db.prepare(query).run(finalValues)
+				let insertedInfo = db.prepare(query.toString() ).run(finalValues)
 
 				// Close local database connection
 				db.close()

@@ -6,6 +6,7 @@ module.exports = {
 		string: 'TEXT',
 		float: 'FLOAT',
 		boolean: 'BOOLEAN',
+		array: 'VARCHAR', // array is stored as a string, transformers will handle this
 		date: 'TIME',
 		time: 'DATE',
 		timestamp: 'TIMESTAMP'

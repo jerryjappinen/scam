@@ -6,7 +6,7 @@ module.exports = function (scam) {
 			body: {
 				message: 'Hello world!',
 				endpoints: scam.endpoints,
-				schema: scam.schema
+				resources: scam.schema.resourceTypes
 			}
 		})
 	})

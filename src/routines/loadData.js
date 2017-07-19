@@ -10,8 +10,7 @@ module.exports = function (dbPath, schema, data) {
 	})
 
 	// Set up each resource
-	for (let resourceType in schema) {
-		// let resource = schema[resourceType]
+	for (let resourceType in schema.resourceTypes) {
 
 		// Look initial data from JSON
 		if (data[resourceType]) {

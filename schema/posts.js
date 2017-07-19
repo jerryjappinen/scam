@@ -5,7 +5,7 @@ module.exports = {
 	fields: {
 
 		user: {
-			type: 'users',
+			type: 'user',
 			required: true
 		},
 
@@ -16,6 +16,11 @@ module.exports = {
 
 		body: {
 			type: 'string',
+			required: true
+		},
+
+		comments: {
+			type: 'comments', // Plural
 			required: true
 		}
 

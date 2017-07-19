@@ -2,8 +2,8 @@ const select = require('../db/select')
 
 module.exports = function (scam) {
 
-	for (let resourceType in scam.schema) {
-		let resource = scam.schema[resourceType]
+	for (let resourceType in scam.schema.resourceTypes) {
+		let resource = scam.schema.resourceTypes[resourceType]
 
 		// Register ID getter endpoint
 		scam.app.get('/' + resource.plural + '/:id', function (request, response) {

@@ -2,8 +2,8 @@ const insert = require('../db/insert')
 
 module.exports = function (scam) {
 
-	for (let resourceType in scam.schema) {
-		let resource = scam.schema[resourceType]
+	for (let resourceType in scam.schema.resourceTypes) {
+		let resource = scam.schema.resourceTypes[resourceType]
 
 		// Register post endpoint
 		scam.app.post('/' + resource.plural, function (request, response) {

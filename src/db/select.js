@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3')
 const squel = require('squel')
 
-const transform = require('../transform')
+const transformOut = require('../transform/out')
 
 module.exports = {
 
@@ -14,7 +14,7 @@ module.exports = {
 
 	// Select item by value of any one field
 	by: function (dbPath, schema, resourceType, where, nest) {
-		let resource = schema[resourceType]
+		let resource = schema.resourceTypes[resourceType]
 
 		// Base query
 		let query = squel.select().from(resource.plural)
@@ -26,13 +26,6 @@ module.exports = {
 			query = query.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
 		}
 
-		// Nesting
-		// if (nest) {
-		// 	query = query.left_join()
-		// }
-
-		query = query.toString()
-
 		return new Promise(function (resolve, reject) {
 			try	{
 
@@ -42,13 +35,13 @@ module.exports = {
 				})
 
 				// Execute query
-				let row = db.prepare(query).get()
+				let row = db.prepare(query.toString()).get()
 
 				// Close local database connection
 				db.close()
 
 				// Resolve promise
-				transform(dbPath, schema, resourceType, row, nest).then(function (row) {
+				transformOut(dbPath, schema, resourceType, row, nest).then(function (row) {
 					resolve(row)
 				}).catch(function (error) {
 					reject(error)
@@ -60,10 +53,17 @@ module.exports = {
 		})
 	},
 
-	all: function (dbPath, schema, resourceType, nest) {
-		let resource = schema[resourceType]
+	all: function (dbPath, schema, resourceType, where, nest) {
+		let resource = schema.resourceTypes[resourceType]
 
-		let query = squel.select().from(resource.plural).toString()
+		let query = squel.select().from(resource.plural)
+
+		// Chain where statements
+		for (let key in where) {
+			let value = where[key]
+			let field = resource.fields[key]
+			query = query.where(key + '=' + ((field && field.type) === 'string' ? '"' + value + '"' : value))
+		}
 
 		return new Promise(function (resolve, reject) {
 			try	{
@@ -74,13 +74,13 @@ module.exports = {
 				})
 
 				// Execute query
-				let rows = db.prepare(query).all()
+				let rows = db.prepare(query.toString()).all()
 
 				// Close local database connection
 				db.close()
 
 				// Resolve promise
-				transform(dbPath, schema, resourceType, rows, nest).then(function (rows) {
+				transformOut(dbPath, schema, resourceType, rows, nest).then(function (rows) {
 					resolve(rows)
 				}).catch(function (error) {
 					reject(error)

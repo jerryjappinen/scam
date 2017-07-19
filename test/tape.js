@@ -16,7 +16,7 @@ tape('HTTP test', function (assert) {
 			subAssert.equal(typeof response.data, 'object', 'Response should be object')
 			subAssert.ok(response.data.body, 'Response should include endpoints')
 			subAssert.ok(response.data.body.endpoints, 'Response should include endpoints')
-			subAssert.ok(response.data.body.schema, 'Response should include schema')
+			subAssert.ok(response.data.body.resources, 'Response should include schema')
 
 			assert.pass()
 
