@@ -9,7 +9,7 @@
 - [x] Make config and module code spearate
 - [x] Rename from `scam` to something else
 - [x] Publish in NPM
-- [ ] Sorting in lists via `sort` param
+- [x] Sorting in lists via `sort` param
 - [ ] Filtering in lists via any non-reserved field param in query
 - [ ] Cache in config and schema
 - [ ] Allow setting type in singular in schema or use another key for setting reference
