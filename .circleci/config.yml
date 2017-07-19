@@ -17,8 +17,8 @@ jobs:
       # - run:
       #     name: deploy
       #     command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
-  deployment:
-    production:
-      branch: master
-      heroku:
-        appname: scam-demo
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: scam-demo
