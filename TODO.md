@@ -14,7 +14,7 @@
 - [x] Better `normalizeWhereValue`
 - [ ] Cache in config and schema
 - [ ] Allow setting type in singular in schema or use another key for setting reference
-- [ ] PUT/UPDATE
+- [x] PUT/UPDATE
 - [ ] Separate repos for demo and module
 - [ ] DELETE
 - [ ] Appropriate error codes (not 500 all the time)
