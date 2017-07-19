@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const bodyParser = require('body-parser')
 
 // Scripts
@@ -6,6 +7,7 @@ const setupDatabase = require('./routines/setupDatabase')
 const loadData = require('./routines/loadData')
 
 // Route initialisers
+const initDeleteById = require('./routes/deleteById')
 const initGetRoot = require('./routes/getRoot')
 const initGetById = require('./routes/getById')
 const initGetList = require('./routes/getList')
@@ -17,7 +19,8 @@ module.exports = {
 	// Props
 
 	app: null,
-	data: null,
+	cache: null,
+	data: {},
 	dbPath: null,
 	endpoints: null,
 	schema: null,
@@ -27,8 +30,21 @@ module.exports = {
 		return this
 	},
 
+	setCache: function (cache) {
+		if (cache) {
+			cache = parseInt(cache)
+			if (_.isNumber(cache) && cache > 0) {
+				this.cache = cache
+			}
+		}
+		return this
+	},
+
 	setData: function (dataPath) {
-		this.data = require(dataPath)
+		let data = require(dataPath)
+		if (data) {
+			this.data = data
+		}
 		return this
 	},
 
@@ -68,6 +84,7 @@ module.exports = {
 	},
 
 	initRoutes: function () {
+		initDeleteById(this)
 		initGetRoot(this)
 		initGetById(this)
 		initGetList(this)
@@ -81,6 +98,7 @@ module.exports = {
 	// API
 
 	setEndpoints: function () {
+
 		let endpoints = [
 			{
 				method: 'get',
@@ -104,7 +122,7 @@ module.exports = {
 				params: ['id']
 			})
 
-			// POST list/:id
+			// POST list
 			endpoints.push({
 				method: 'post',
 				path: '/' + path
@@ -120,7 +138,8 @@ module.exports = {
 			// DELETE list/:id
 			endpoints.push({
 				method: 'delete',
-				path: '/' + path
+				path: '/' + path,
+				params: ['id']
 			})
 
 		}
@@ -146,12 +165,19 @@ module.exports = {
 
 	// Setup
 
-	init: function (app, dbPath, schemaPath, dataPath) {
-		return this.setAll(app, dbPath, schemaPath, dataPath).prepare()
+	init: function (app, options) {
+		return this.setAll(
+			app,
+			options.cache,
+			options.dbPath,
+			options.schemaPath,
+			options.dataPath
+		).prepare()
 	},
 
-	setAll: function (app, dbPath, schemaPath, dataPath) {
+	setAll: function (app, cache, dbPath, schemaPath, dataPath) {
 		this.setApp(app)
+			.setCache(cache)
 			.setData(dataPath)
 			.setDbPath(dbPath)
 			.setSchema(schemaPath)

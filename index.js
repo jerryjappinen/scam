@@ -1,10 +1,12 @@
-const config = require('./scam.json')
+const options = require('./scam.json')
 
 // Treat paths
 const path = require('path')
-const dataPath = path.resolve(__dirname, config.data)
-const schemaPath = path.resolve(__dirname, config.schema)
-const dbPath = path.resolve(__dirname, config.db)
+const pathOptions = ['dataPath', 'schemaPath', 'dbPath']
+for (let i = 0; i < pathOptions.length; i++) {
+	let key = pathOptions[i]
+	options[key] = path.resolve(__dirname, options[key])
+}
 
 // Deps
 const express = require('express')
@@ -21,7 +23,7 @@ app.use(cors())
 app.use(nocache())
 
 // Setting up Scam
-scam.init(app, dbPath, schemaPath, dataPath)
+scam.init(app, options)
 
 // Specific command defined (other than start)
 

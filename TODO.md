@@ -13,8 +13,8 @@
 - [x] Filtering in lists via any non-reserved field param in query
 - [x] Better `normalizeWhereValue`
 - [x] PUT/UPDATE
-- [ ] Move selection after insert/update to route handlers
-- [ ] DELETE
+- [x] DELETE
+- [x] Move selection after insert/update to route handlers
 - [ ] Cache in config and schema
 - [ ] Allow setting type in singular in schema or use another key for setting reference
 - [ ] Separate repos for demo and module
@@ -28,3 +28,4 @@
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
 - [ ] Control nesting level via `depth` param (have to control circular references somehow)
+- [ ] Refactor app to have more structure and less passing the same arguments everywhere
