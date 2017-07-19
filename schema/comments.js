@@ -4,18 +4,13 @@ module.exports = {
 
 	fields: {
 
-		postId: {
+		post: {
 			type: 'post',
 			required: true
 		},
 
-		userId: {
+		user: {
 			type: 'user',
-			required: false
-		},
-
-		email: {
-			type: 'string',
 			required: false
 		},
 
