@@ -1,3 +1,5 @@
+const fail = require('../response/fail')
+const success = require('../response/success')
 const select = require('../db/select')
 
 module.exports = function (scam) {
@@ -8,43 +10,47 @@ module.exports = function (scam) {
 		// Register ID getter endpoint
 		scam.app.get('/' + resource.plural + '/:id', function (request, response) {
 
+			// Find element from database
 			select.one(
 				scam.dbPath,
 				scam.schema,
 				resourceType,
 				parseInt(request.params.id),
 				request.query.nest ? true : false
+
 			).then(function (row) {
 
+				// Send out success response
 				if (row) {
+					success(
+						scam,
+						resourceType,
+						response,
+						200,
+						row
+					)
 
-					// Send out success response
-					response.status(200).json({
-						status: 200,
-						timestamp: new Date(),
-						body: row
-					})
-
+				// Not found
 				} else {
-
-					// Not found
-					response.status(404).json({
-						status: 404,
-						timestamp: new Date(),
-						body: 'A ' + resource.singular + ' with the ID ' + request.params.id + ' could not be found.'
-					})
+					fail(
+						scam,
+						resourceType,
+						response,
+						404,
+						'A ' + resource.singular + ' with the ID ' + request.params.id + ' could not be found.'
+					)
 
 				}
 
+			// Something else went wrong
 			}).catch(function (error) {
-
-				// Send out error response
-				// FIXME: hardcoded 500, c'mon!!
-				response.status(500).json({
-					status: 500,
-					timestamp: new Date(),
-					message: error.message
-				})
+				fail(
+					scam,
+					resourceType,
+					response,
+					500,
+					error
+				)
 
 			})
 

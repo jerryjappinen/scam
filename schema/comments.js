@@ -1,7 +1,6 @@
 module.exports = {
 	singular: 'comment',
 	plural: 'comments',
-
 	fields: {
 
 		post: {
@@ -20,5 +19,4 @@ module.exports = {
 		}
 
 	}
-
 }

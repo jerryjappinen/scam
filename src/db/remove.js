@@ -27,9 +27,11 @@ module.exports = {
 
 				resolve()
 
+			// NOTE: should this fail if user with this ID is missing?
 			} catch (error) {
 				reject(error)
 			}
+
 		})
 	}
 

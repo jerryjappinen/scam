@@ -14,13 +14,11 @@ const scam = require('./src')
 
 // Optional middleware
 const cors = require('cors')
-const nocache = require('nocache')
 
 // Express app setup
 const app = express()
 app.set('port', (process.env.PORT || 3333))
 app.use(cors())
-app.use(nocache())
 
 // Setting up Scam
 scam.init(app, options)

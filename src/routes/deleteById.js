@@ -1,24 +1,8 @@
+const fail = require('../response/fail')
+const success = require('../response/success')
 const remove = require('../db/remove')
 
 module.exports = function (scam) {
-
-	// Send out error response
-	const fail = function (response, error) {
-		response.status(500).json({
-			status: 500,
-			timestamp: new Date(),
-			message: error.message
-		})
-	}
-
-	// Send out success response
-	const succeed = function (response, body) {
-		response.status(200).json({
-			status: 200,
-			timestamp: new Date(),
-			body: body
-		})
-	}
 
 	for (let resourceType in scam.schema.resourceTypes) {
 		let resource = scam.schema.resourceTypes[resourceType]
@@ -32,11 +16,27 @@ module.exports = function (scam) {
 				scam.schema,
 				resourceType,
 				parseInt(request.params.id)
-			).then(function (id) {
-				succeed(response, {})
 
+			// Success response
+			).then(function (id) {
+				success(
+					scam,
+					resourceType,
+					response,
+					200,
+					{}
+				)
+
+			// Error response
 			}).catch(function (error) {
-				fail(response, error)
+				fail(
+					scam,
+					resourceType,
+					response,
+					500,
+					error
+				)
+
 			})
 
 		})

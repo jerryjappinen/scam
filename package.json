@@ -20,12 +20,11 @@
   },
   "author": "",
   "dependencies": {
-    "better-sqlite3": "^3.1.1",
+    "better-sqlite3": "^3.1.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "lodash": "^4.17.4",
-    "nocache": "^2.0.0",
     "squel": "^5.11.1"
   },
   "devDependencies": {

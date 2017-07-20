@@ -1,7 +1,7 @@
 module.exports = {
+	cache: 30,
 	singular: 'user',
 	plural: 'users',
-
 	fields: {
 
 		email: {
@@ -27,5 +27,4 @@ module.exports = {
 		}
 
 	}
-
 }

@@ -29,3 +29,12 @@
 - [ ] Pagination (limits and offsets)
 - [ ] Control nesting level via `depth` param (have to control circular references somehow)
 - [ ] Refactor app to have more structure and less passing the same arguments everywhere
+
+## Rewrite
+
+- `ScamConfig`
+- `ScamSchema`
+- `ScamResourceType`
+- `ScamResourceField`
+- `ScamResponseSuccess`
+- `ScamResponseFail`

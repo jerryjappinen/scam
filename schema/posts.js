@@ -1,7 +1,6 @@
 module.exports = {
 	singular: 'post',
 	plural: 'posts',
-
 	fields: {
 
 		user: {
@@ -25,5 +24,4 @@ module.exports = {
 		}
 
 	}
-
 }
