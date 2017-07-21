@@ -1,5 +1,8 @@
 const _ = require('lodash')
 
+const fail = require('../response/fail')
+const success = require('../response/success')
+
 const config = require('../config')
 const select = require('../db/select')
 
@@ -32,21 +35,25 @@ module.exports = function (scam) {
 			).then(function (rows) {
 
 				// Send out success response
-				response.status(200).json({
-					status: 200,
-					length: rows.length,
-					timestamp: new Date(),
-					body: rows
-				})
+				success(
+					scam,
+					resourceType,
+					request,
+					response,
+					200,
+					rows
+				)
 
+			// Something else went wrong
 			}).catch(function (error) {
-
-				// Send out error response
-				response.status(500).json({
-					status: 500,
-					timestamp: new Date(),
-					message: error.message
-				})
+				fail(
+					scam,
+					resourceType,
+					request,
+					response,
+					500,
+					error
+				)
 
 			})
 

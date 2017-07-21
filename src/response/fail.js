@@ -1,4 +1,4 @@
-module.exports = function (scam, resourceType, response, status, error) {
+module.exports = function (scam, resourceType, request, response, status, error) {
 
 	// Default error status
 	// NOTE: Should we read this from error?

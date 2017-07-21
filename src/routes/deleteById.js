@@ -1,5 +1,6 @@
 const fail = require('../response/fail')
 const success = require('../response/success')
+
 const remove = require('../db/remove')
 
 module.exports = function (scam) {
@@ -22,6 +23,7 @@ module.exports = function (scam) {
 				success(
 					scam,
 					resourceType,
+					request,
 					response,
 					200,
 					{}
@@ -32,6 +34,7 @@ module.exports = function (scam) {
 				fail(
 					scam,
 					resourceType,
+					request,
 					response,
 					500,
 					error

@@ -1,5 +1,6 @@
 const fail = require('../response/fail')
 const success = require('../response/success')
+
 const select = require('../db/select')
 
 module.exports = function (scam) {
@@ -25,6 +26,7 @@ module.exports = function (scam) {
 					success(
 						scam,
 						resourceType,
+						request,
 						response,
 						200,
 						row
@@ -35,6 +37,7 @@ module.exports = function (scam) {
 					fail(
 						scam,
 						resourceType,
+						request,
 						response,
 						404,
 						'A ' + resource.singular + ' with the ID ' + request.params.id + ' could not be found.'
@@ -47,6 +50,7 @@ module.exports = function (scam) {
 				fail(
 					scam,
 					resourceType,
+					request,
 					response,
 					500,
 					error

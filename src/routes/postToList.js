@@ -1,37 +1,24 @@
+const fail = require('../response/fail')
+const success = require('../response/success')
+
 const insert = require('../db/insert')
 const select = require('../db/select')
 
 module.exports = function (scam) {
 
-	// Send out error response
-	const fail = function (response, error) {
-		response.status(500).json({
-			status: 500,
-			timestamp: new Date(),
-			message: error.message
-		})
-	}
-
-	// Send out success response
-	const succeed = function (response, body) {
-		response.status(201).json({
-			status: 201,
-			timestamp: new Date(),
-			body: body
-		})
-	}
-
 	for (let resourceType in scam.schema.resourceTypes) {
 		let resource = scam.schema.resourceTypes[resourceType]
 
-		// Register post endpoint
-		scam.app.post('/' + resource.plural, function (request, response) {
+		// Insert response handler
+		let handler = function (request, response) {
 
 			// Fetch supported values from request body
-			// FIXME: this is the same as sending the whole body in?
-			let values = {}
-			for (let requestKey in request.body) {
-				values[requestKey] = request.body[requestKey]
+			// FIXME: should be helper
+			let valuesToInsert = {}
+			for (let fieldName in resource.fields) {
+				if (typeof request.body[fieldName] !== 'undefined') {
+					valuesToInsert[fieldName] = request.body[fieldName]
+				}
 			}
 
 			// Insert new object
@@ -39,7 +26,9 @@ module.exports = function (scam) {
 				scam.dbPath,
 				scam.schema,
 				resourceType,
-				values
+				valuesToInsert
+
+			// After insert...
 			).then(function (newRowId) {
 
 				// Fetch the inserted object
@@ -50,18 +39,48 @@ module.exports = function (scam) {
 					newRowId,
 					false
 
+				// Send success response with the newly created object
 				).then(function (row) {
-					succeed(response, row)
+					success(
+						scam,
+						resourceType,
+						request,
+						response,
+						201,
+						row
+					)
 
+				// Could not fetch the new object
 				}).catch(function (error) {
-					fail(response, error)
+					fail(
+						scam,
+						resourceType,
+						request,
+						response,
+						500,
+						error
+					)
 				})
 
+			// Something went wrong when doing the insert
 			}).catch(function (error) {
-				fail(response, error)
+				fail(
+					scam,
+					resourceType,
+					request,
+					response,
+					500,
+					error
+				)
+
 			})
 
-		})
+		}
+
+		// Register update endpoints
+		// NOTE: we do this for convenience, but it's not really correct
+		scam.app.patch('/' + resource.plural, handler)
+		scam.app.post('/' + resource.plural, handler)
 
 	}
 

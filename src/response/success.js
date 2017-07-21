@@ -2,12 +2,22 @@ const _ = require('lodash')
 
 const getCacheDuration = require('../helpers/getCacheDuration')
 
-module.exports = function (scam, resourceType, response, status, body) {
+module.exports = function (scam, resourceType, request, response, status, body) {
 
 	// Default status
 	if (!status) {
 		status = 200
 	}
+
+	// Figure out the right cache time
+	let cache = 0
+	if (request.method.toLowerCase() === 'get' && resourceType) {
+		cache = getCacheDuration(scam, resourceType)
+	}
+
+
+
+	// Response body
 
 	// Basic format
 	let content = {
@@ -20,11 +30,11 @@ module.exports = function (scam, resourceType, response, status, body) {
 	}
 
 	// Lists get additional meta info
-	if (body instanceof Array) {
+	if (content.body instanceof Array) {
 
 		// Number of items in list vs. available in total
-		content.count = body.length
-		content.totalCount = body.length
+		content.count = content.body.length
+		content.totalCount = content.body.length
 
 		// Offset
 		content.offset = 0
@@ -33,13 +43,24 @@ module.exports = function (scam, resourceType, response, status, body) {
 		content.limit = null
 	}
 
+	// Add meta info about resource type
+	if (resourceType) {
+		content.schema = scam.schema.resourceTypes[resourceType]
+	}
+
+
+
+	// Headers
+
 	// Set cache headers based on the cache time defined
-	let cache = getCacheDuration(scam, resourceType)
 	if (cache > 0) {
 		response.setHeader('Cache-Control', 'public, max-age=' + (cache * 60))
 	} else {
 		response.setHeader('Cache-Control', 'no-cache')
 	}
 
+
+
+	// Set and return final response
 	return response.status(status).json(content)
 }
