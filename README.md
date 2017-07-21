@@ -1,4 +1,3 @@
-**Do not use Scam yet!** It's not ready for prime time and will see a healthy number of breaking changes very soon.
 
 # Scam
 
@@ -7,6 +6,10 @@ Simple schema-based CRUD app bootstrapper on node and SQLite.
 - Source: https://github.com/Eiskis/scam
 - Demo: https://scam-demo.herokuapp.com/
 - Demo source: https://github.com/Eiskis/scam
+
+As the name implies, **Scam is not suitable for production use**! Scam is a prototyping tool intended for designing REST APIs and supporting frontend development.
+
+**Also, do not use Scam yet!** It's not ready for prime time and will see a healthy number of breaking changes very soon.
 
 ## Usage
 

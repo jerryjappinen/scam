@@ -15,22 +15,25 @@
 - [x] PUT/UPDATE
 - [x] DELETE
 - [x] Move selection after insert/update to route handlers
-- [ ] Cache in config and schema
-- [ ] Allow setting type in singular in schema or use another key for setting reference
+- [x] Cache in config and schema
+- [x] Allow setting type in singular in schema or use another key for setting reference
+- [x] Make some kind of response formatter for success and error responses
+- [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
+- [x] ~~Control nesting level via `depth` param (have to control circular references somehow)~~
+- [ ] Add `logEndpoints` to module
 - [ ] Separate repos for demo and module
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
 - [ ] `updated` timestamp
 - [ ] Make `required` work (return errors from POST and UPDATE)
-- [ ] Make some kind of response formatter for success and error responses
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
-- [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
-- [ ] Control nesting level via `depth` param (have to control circular references somehow)
-- [ ] Refactor app to have more structure and less passing the same arguments everywhere
+	- One is enough
 
 ## Rewrite
+
+Refactor app to have more structure and less passing the same arguments everywhere.
 
 - `ScamConfig`
 - `ScamSchema`
