@@ -47,6 +47,13 @@ module.exports = {
 		stringFormatter: function (string) {
 			return string
 		}
+	},
+
+	consoleLogColors: {
+		'get': '#4FBEE3', // blue
+		'post': '#90E92F', // green
+		'put': '#F5A623', // orange
+		'delete': '#F0607F' // red
 	}
 
 }

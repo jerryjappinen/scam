@@ -1,10 +1,15 @@
 const _ = require('lodash')
 const bodyParser = require('body-parser')
-const chalk = require('chalk')
+
+// Central config
+// const config = require('./config')
+
+// CLI
+const logger = require('./cli/logger')
 
 // Scripts
 const clearDatabase = require('./routines/clearDatabase')
-const setupDatabase = require('./routines/setupDatabase')
+const createDatabase = require('./routines/createDatabase')
 const loadData = require('./routines/loadData')
 
 // Route initialisers
@@ -18,13 +23,14 @@ const initPostToList = require('./routes/postToList')
 module.exports = {
 
 	// Props
-
 	app: null,
 	cache: null,
 	data: {},
 	dbPath: null,
 	endpoints: null,
 	schema: null,
+
+	// Setters
 
 	setApp: function (app) {
 		this.app = app
@@ -100,6 +106,7 @@ module.exports = {
 
 	setEndpoints: function () {
 
+		// Meta info at root
 		let endpoints = [
 			{
 				method: 'get',
@@ -150,53 +157,17 @@ module.exports = {
 		return this
 	},
 
-	logEndpoints: function (url, mono) {
-		console.log('A Scam REST API is now running with these endpoints:')
 
-		if (!url) {
-			url = ''
-		}
 
-		let lastPath
+	// CLI logger API
 
-		for (let key in this.endpoints) {
-			let endpoint = this.endpoints[key]
-			let method = endpoint.method.toUpperCase()
-			let path = endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
+	logger: logger,
 
-			// Line break between resources
-			if (lastPath !== endpoint.path) {
-				lastPath = endpoint.path
-				console.log()
-			}
-
-			// Print with colors
-			let line = '\t' + method + '\t\t'
-			if (!mono) {
-
-				// Set color based on method
-				let colors = {
-					'GET': '#4FBEE3', // blue
-					'POST': '#90E92F', // green
-					'PUT': '#F5A623', // orange
-					'DELETE': '#F0607F' // red
-				}
-
-				// Apply color via Chalk
-				line = chalk.hex(colors[method] ? colors[method] : colors['get'])(line)
-
-				// Starting part of the URL can be grey
-				line = line + chalk.gray(url) + path
-
-			} else {
-				line = line + url + path
-			}
-
-			console.log(line + path)
-
-		}
-
+	log: function (url, mono) {
+		this.logger.all(this.endpoints, url, mono)
+		return this
 	},
+
 
 
 	// Lifecycle handling
@@ -205,8 +176,8 @@ module.exports = {
 		clearDatabase(this.dbPath)
 	},
 
-	setupDatabase: function () {
-		setupDatabase(this.dbPath, this.schema)
+	createDatabase: function () {
+		createDatabase(this.dbPath, this.schema)
 	},
 
 	loadData: function () {

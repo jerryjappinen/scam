@@ -1,3 +1,4 @@
+// Fetch options from a JSON file
 const options = require('./scam.json')
 
 // Treat paths
@@ -23,7 +24,7 @@ app.use(cors())
 // Setting up Scam
 scam.init(app, options)
 
-// Specific command defined (other than start)
+
 
 // List of supported commands
 switch (process.argv[2]) {
@@ -32,8 +33,8 @@ case 'clear':
 	scam.clearDatabase()
 	break
 
-case 'init':
-	scam.setupDatabase()
+case 'create':
+	scam.createDatabase()
 	break
 
 case 'load':
@@ -45,7 +46,7 @@ default:
 
 	// Start app with some debug info
 	app.listen(app.get('port'), function () {
-		scam.logEndpoints('http://localhost:' + app.get('port'))
+		scam.log('http://localhost:' + app.get('port'))
 	})
 
 	break

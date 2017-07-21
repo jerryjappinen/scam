@@ -20,7 +20,8 @@
 - [x] Make some kind of response formatter for success and error responses
 - [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
 - [x] ~~Control nesting level via `depth` param (have to control circular references somehow)~~
-- [ ] Add `logEndpoints` to module
+- [x] Add `logEndpoints` to module
+- [ ] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
 - [ ] Separate repos for demo and module
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
