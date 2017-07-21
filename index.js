@@ -44,33 +44,8 @@ case 'load':
 default:
 
 	// Start app with some debug info
-	const chalk = require('chalk')
 	app.listen(app.get('port'), function () {
-		let url = 'http://localhost:' + app.get('port')
-
-		console.log('scam API is now running with these endpoints:')
-
-		let lastPath
-		for (let key in scam.endpoints) {
-			let endpoint = scam.endpoints[key]
-			let method = endpoint.method.toUpperCase()
-			let path = url + endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
-
-			let color = endpoint.method === 'get'
-				? 'blue'
-				: endpoint.method === 'delete'
-					? 'yellow'
-					: 'green'
-
-			if (lastPath !== endpoint.path) {
-				lastPath = endpoint.path
-				console.log()
-			}
-
-			console.log(chalk[color]('\t' + method + '\t\t') + path)
-
-		}
-
+		scam.logEndpoints('http://localhost:' + app.get('port'))
 	})
 
 	break

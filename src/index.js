@@ -1,5 +1,6 @@
 const _ = require('lodash')
 const bodyParser = require('body-parser')
+const chalk = require('chalk')
 
 // Scripts
 const clearDatabase = require('./routines/clearDatabase')
@@ -148,6 +149,57 @@ module.exports = {
 
 		return this
 	},
+
+	logEndpoints: function (url, mono) {
+		console.log('A Scam REST API is now running with these endpoints:')
+
+		if (!url) {
+			url = ''
+		}
+
+		let lastPath
+
+		for (let key in this.endpoints) {
+			let endpoint = this.endpoints[key]
+			let method = endpoint.method.toUpperCase()
+			let path = endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')
+
+			// Line break between resources
+			if (lastPath !== endpoint.path) {
+				lastPath = endpoint.path
+				console.log()
+			}
+
+			// Print with colors
+			let line = '\t' + method + '\t\t'
+			if (!mono) {
+
+				// Set color based on method
+				let colors = {
+					'GET': '#4FBEE3', // blue
+					'POST': '#90E92F', // green
+					'PUT': '#F5A623', // orange
+					'DELETE': '#F0607F' // red
+				}
+
+				// Apply color via Chalk
+				line = chalk.hex(colors[method] ? colors[method] : colors['get'])(line)
+
+				// Starting part of the URL can be grey
+				line = line + chalk.gray(url) + path
+
+			} else {
+				line = line + url + path
+			}
+
+			console.log(line + path)
+
+		}
+
+	},
+
+
+	// Lifecycle handling
 
 	clearDatabase: function () {
 		clearDatabase(this.dbPath)
