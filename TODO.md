@@ -20,6 +20,7 @@
 - [x] Make some kind of response formatter for success and error responses
 - [x] Support nested object lists (IDs and/or expanded, singular vs. plural, using `select.all`)
 - [x] ~~Control nesting level via `depth` param (have to control circular references somehow)~~
+	- One is enough
 - [x] Add `logEndpoints` to module
 - [ ] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
 - [ ] Separate repos for demo and module
@@ -30,7 +31,11 @@
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
-	- One is enough
+- [ ] Validation errors for input in scam
+- [ ] Validate options on init
+- [ ] Support schema and schema path as option
+- [ ] Support in-memory db
+- [ ] Validate params
 
 ## Rewrite
 
