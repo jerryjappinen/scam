@@ -13,14 +13,12 @@ const createDatabase = require('./routines/createDatabase')
 const loadData = require('./routines/loadData')
 
 // Route initialisers
-const initDeleteById = require('./routes/deleteById')
-const initGetRoot = require('./routes/getRoot')
-const initGetById = require('./routes/getById')
-const initGetList = require('./routes/getList')
-const initPutById = require('./routes/putById')
-const initPostToList = require('./routes/postToList')
+const routes = require('./routes')
 
 module.exports = {
+
+	// Components
+	logger: logger,
 
 	// Props
 	app: null,
@@ -47,24 +45,28 @@ module.exports = {
 		return this
 	},
 
-	setData: function (dataPath) {
-		let data = require(dataPath)
+	setData: function (data) {
 		if (data) {
 			this.data = data
 		}
 		return this
 	},
 
-	setDbPath: function (dbPath) {
+	setDataFromPath: function (dataPath) {
+		return this.setData(require(dataPath))
+	},
+
+	setDatabasePath: function (dbPath) {
 		this.dbPath = dbPath
 		return this
 	},
 
-	setSchema: function (schemaPath) {
+	setSchema: function (resourceTypes) {
+
 		let schema = {
 			plurals: {},
 			singulars: {},
-			resourceTypes: require(schemaPath)
+			resourceTypes: resourceTypes
 		}
 
 		// Generate mappings between singular and plural, since keys are stored only in the latter format
@@ -78,25 +80,27 @@ module.exports = {
 		return this
 	},
 
+	setSchemaFromPath: function (schemaPath) {
+		return this.setSchema(require(schemaPath))
+	},
+
 
 
 	// Setup work
 
 	prepareApp: function () {
+
+		// Set up some Express middleware
 		this.app.use(bodyParser.json())
 		this.app.use(bodyParser.urlencoded({
 			extended: true
 		}))
+
 		return this
 	},
 
 	initRoutes: function () {
-		initDeleteById(this)
-		initGetRoot(this)
-		initGetById(this)
-		initGetList(this)
-		initPostToList(this)
-		initPutById(this)
+		routes(this)
 		return this
 	},
 
@@ -104,7 +108,7 @@ module.exports = {
 
 	// API
 
-	setEndpoints: function () {
+	getEndpoints: function () {
 
 		// Meta info at root
 		let endpoints = [
@@ -114,6 +118,7 @@ module.exports = {
 			}
 		]
 
+		// Per resource type
 		for (let key in this.schema.resourceTypes) {
 			let path = this.schema.resourceTypes[key].plural
 
@@ -152,16 +157,17 @@ module.exports = {
 
 		}
 
-		this.endpoints = endpoints
+		return endpoints
+	},
 
+	setEndpoints: function (endpoints) {
+		this.endpoints = endpoints
 		return this
 	},
 
 
 
 	// CLI logger API
-
-	logger: logger,
 
 	log: function (url, mono) {
 		this.logger.all(this.endpoints, url, mono)
@@ -189,27 +195,39 @@ module.exports = {
 	// Setup
 
 	init: function (app, options) {
-		return this.setAll(
-			app,
-			options.cache,
-			options.dbPath,
-			options.schemaPath,
-			options.dataPath
-		).prepare()
-	},
 
-	setAll: function (app, cache, dbPath, schemaPath, dataPath) {
-		this.setApp(app)
-			.setCache(cache)
-			.setData(dataPath)
-			.setDbPath(dbPath)
-			.setSchema(schemaPath)
-			.setEndpoints()
+		// Store reference to app and register some middleware
+		this.setApp(app).prepareApp()
+
+		// Set default cache time
+		this.setCache(options.cache)
+
+		// Data as object or as a path to require from
+		if (_.isPlainObject(options.data)) {
+			this.setData(options.data)
+		} else if (_.isString(options.data)) {
+			this.setDataFromPath(options.data)
+		}
+
+		// If database path was provided, use it instead of an in-memory DB
+		if (_.isString(options.databasePath)) {
+			this.setDatabasePath(options.databasePath)
+		}
+
+		// Schema as object or as a path to require from
+		if (_.isPlainObject(options.schema)) {
+			this.setSchema(options.schema)
+		} else if (_.isString(options.schema)) {
+			this.setSchemaFromPath(options.schema)
+		}
+
+		// Define endpoints based on resource types
+		this.setEndpoints(this.getEndpoints())
+
+		// Register routes and route handlers for all resource types
+		this.initRoutes()
+
 		return this
-	},
-
-	prepare: function () {
-		return this.prepareApp().initRoutes()
 	}
 
 }

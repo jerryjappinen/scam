@@ -42,6 +42,7 @@ module.exports = {
 		return this
 			.endpoints(endpoints, url, mono)
 			.sortParams(mono)
+			.nestParams(mono)
 			.filterParams(mono)
 	},
 
@@ -120,6 +121,32 @@ module.exports = {
 		return this
 	},
 
+	nestParams: function (mono) {
+
+		let nesting = [
+			['resource with objects', '?nest=true']
+		]
+
+		// Heading
+		this.print('Nested resources:', true)
+
+		// Instructions
+		for (var i = 0; i < nesting.length; i++) {
+			let description = nesting[i][0]
+			let params = nesting[i][1]
+
+			let pad = ' '.repeat(this.columnWidth - description.length)
+
+			if (!mono) {
+				params = this.color(params, 'get')
+			}
+
+			this.print(description + pad + params)
+		}
+
+		return this
+	},
+
 	filterParams: function (mono) {
 
 		let filters = [
@@ -133,7 +160,6 @@ module.exports = {
 		this.print('Filter lists:', true)
 
 		// Instructions
-
 		for (var i = 0; i < filters.length; i++) {
 			let description = filters[i][0]
 			let params = filters[i][1]

@@ -1,13 +1,13 @@
-// Fetch options from a JSON file
-const options = require('./scam.json')
-
-// Treat paths
 const path = require('path')
-const pathOptions = ['dataPath', 'schemaPath', 'dbPath']
-for (let i = 0; i < pathOptions.length; i++) {
-	let key = pathOptions[i]
-	options[key] = path.resolve(__dirname, options[key])
+
+const options = {
+	cache: 0,
+	data: path.resolve(__dirname, 'data/'),
+	schema: path.resolve(__dirname, 'schema/'),
+	databasePath: path.resolve(__dirname, 'db/db.sql')
 }
+
+
 
 // Deps
 const express = require('express')

@@ -8,9 +8,9 @@
     "url": "git@github.com:Eiskis/scam.git"
   },
   "scripts": {
-    "reload": "npm run clear && npm run init && npm run load",
+    "reload": "npm run clear && npm run create && npm run load",
     "clear": "node ./index.js clear",
-    "init": "node ./index.js init",
+    "create": "node ./index.js create",
     "load": "node ./index.js load",
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
