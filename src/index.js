@@ -170,7 +170,7 @@ module.exports = {
 	// CLI logger API
 
 	log: function (url, mono) {
-		this.logger.all(this.endpoints, url, mono)
+		this.logger.all(this, url, mono)
 		return this
 	},
 

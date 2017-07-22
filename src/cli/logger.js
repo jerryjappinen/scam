@@ -46,19 +46,19 @@ module.exports = {
 			.filterParams(mono)
 	},
 
-	endpoints: function (endpoints, url, mono) {
+	endpoints: function (scam, url, mono) {
 
-		this.print('A Scam REST API is now running with these endpoints:', true)
+		this.print('A Scam REST API is now running on ' + (url ? (url + ':') : 'port ') + scam.app.get('port') + ' with these endpoints:', true)
 
 		if (!url) {
 			url = ''
 		}
 
-		let lastPath = endpoints[0].path
+		let lastPath = scam.endpoints[0].path
 
 		// List each endpoint
-		for (let key in endpoints) {
-			let endpoint = endpoints[key]
+		for (let key in scam.endpoints) {
+			let endpoint = scam.endpoints[key]
 
 			let method = endpoint.method.toUpperCase()
 			let path = endpoint.path + (endpoint.params ? '/:' + endpoint.params.join('/:') : '')

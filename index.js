@@ -1,53 +1,37 @@
 const path = require('path')
-
-const options = {
-	cache: 0,
-	data: path.resolve(__dirname, 'data/'),
-	schema: path.resolve(__dirname, 'schema/'),
-	databasePath: path.resolve(__dirname, 'db/db.sql')
-}
-
-
-
-// Deps
 const express = require('express')
 const scam = require('./src')
-
-// Optional middleware
-const cors = require('cors')
 
 // Express app setup
 const app = express()
 app.set('port', (process.env.PORT || 3333))
-app.use(cors())
 
-// Setting up Scam
-scam.init(app, options)
+// Optional middleware as you wish
+// app.use(require('cors'))
 
+// Set up Scam
+scam.init(app, {
+	cache: 0,
+	data: require('./data'),
+	schema: require('./schema'),
+	databasePath: path.resolve(__dirname, 'db/db.sql')
+})
 
+// Deal with the database manually based on CLI arguments
+let arg = process.argv[2]
 
-// List of supported commands
-switch (process.argv[2]) {
-
-case 'clear':
+// Clear, create and/or load data into database
+if (arg === 'clear') {
 	scam.clearDatabase()
-	break
-
-case 'create':
+} else if (arg === 'create') {
 	scam.createDatabase()
-	break
-
-case 'load':
+} else if (arg === 'load') {
 	scam.loadData()
-	break
 
-// Start the server
-default:
-
-	// Start app with some debug info
+// Start the server and print endpoints
+} else {
 	app.listen(app.get('port'), function () {
-		scam.log('http://localhost:' + app.get('port'))
+		scam.log()
 	})
 
-	break
 }
