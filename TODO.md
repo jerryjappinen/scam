@@ -35,7 +35,8 @@
 - [ ] Validate options on init
 - [ ] Support schema and schema path as option
 - [ ] Support in-memory db
-- [ ] Validate params
+- [ ] Validate all params (sort, nest, filter per field rawType)
+- [ ] Add option for debug mode and print internal error messages as debug field
 
 ## Rewrite
 

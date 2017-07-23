@@ -1,8 +1,7 @@
-const getRawType = require('./getRawType')
+const _ = require('lodash')
 
 // Be accepting when people give out values
-module.exports = function (fieldName, resourceType, schema, value) {
-	let rawType = getRawType(fieldName, resourceType, schema)
+module.exports = function (rawType, value) {
 
 	// Strings need quote treatment
 	if (rawType === 'string') {
@@ -10,7 +9,10 @@ module.exports = function (fieldName, resourceType, schema, value) {
 
 	// Integers, oh integers
 	} else if (rawType === 'integer') {
-		return parseInt(value)
+		let int = parseInt(value)
+		if (_.isNumber(int) && !_.isNaN(int)) {
+			return int
+		}
 	}
 
 	return value

@@ -57,6 +57,14 @@ module.exports = {
 		'post': '#90E92F', // green
 		'put': '#F5A623', // orange
 		'delete': '#F0607F' // red
+	},
+
+	errorMessages: {
+		options: 'Incorrect options passed to Scam',
+
+		// Option-related error codes
+		'options.data.format': 'Data was not passed in the correct format. Pass data as an object, or a string of a path to require data from.'
+
 	}
 
 }

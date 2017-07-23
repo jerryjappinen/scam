@@ -12,6 +12,8 @@ module.exports = function (scam) {
 		// Insert response handler
 		let handler = function (request, response) {
 
+			const message500 = 'Something went wrong when adding this resource.'
+
 			// Fetch supported values from request body
 			// FIXME: should be helper
 			let valuesToInsert = {}
@@ -58,6 +60,7 @@ module.exports = function (scam) {
 						request,
 						response,
 						500,
+						message500,
 						error
 					)
 				})
@@ -70,6 +73,7 @@ module.exports = function (scam) {
 					request,
 					response,
 					500,
+					message500,
 					error
 				)
 

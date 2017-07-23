@@ -1,4 +1,4 @@
-module.exports = function (scam, resourceType, request, response, status, error) {
+module.exports = function (scam, resourceType, request, response, status, body, debug) {
 
 	// Default error status
 	// NOTE: Should we read this from error?
@@ -11,9 +11,10 @@ module.exports = function (scam, resourceType, request, response, status, error)
 		timestamp: new Date()
 	}
 
-	// Never send out undefined
-	if (error) {
-		content.body = error.message ? error.message : ('' + error)
+	content.body = body
+
+	if (scam.debug && debug) {
+		content.debug = debug
 	}
 
 	// Never cache errors

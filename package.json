@@ -13,7 +13,7 @@
     "create": "node ./index.js create",
     "load": "node ./index.js load",
     "start": "node ./index.js",
-    "dev": "nodemon ./index.js",
+    "dev": "nodemon ./index.js debug",
     "lint": "eslint --ext .js src scripts",
     "tape": "node ./test/tape.js",
     "test": "mocha --timeout 10000"

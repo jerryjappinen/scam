@@ -11,6 +11,11 @@ app.set('port', (process.env.PORT || 3333))
 
 // Set up Scam
 scam.init(app, {
+
+	// Set Scam to debug mode based on CLI params
+	debug: process.argv.indexOf('debug') > -1 ? true : false,
+
+	// Other options
 	cache: 0,
 	data: require('./data'),
 	schema: require('./schema'),

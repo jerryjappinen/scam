@@ -11,12 +11,17 @@ module.exports = function (scam) {
 		// Register ID getter endpoint
 		scam.app.get('/' + resource.plural + '/:id', function (request, response) {
 
+			const requestedId = parseInt(request.params.id)
+
+			const message404 = 'A ' + resource.singular + ' with the requested ID ' + requestedId + ' does not exist'
+			const message500 = 'Something went wrong when looking for this resource.'
+
 			// Find element from database
 			select.one(
 				scam.dbPath,
 				scam.schema,
 				resourceType,
-				parseInt(request.params.id),
+				requestedId,
 				request.query.nest ? true : false
 
 			).then(function (row) {
@@ -40,7 +45,7 @@ module.exports = function (scam) {
 						request,
 						response,
 						404,
-						'A ' + resource.singular + ' with the ID ' + request.params.id + ' could not be found.'
+						message404
 					)
 
 				}
@@ -53,6 +58,7 @@ module.exports = function (scam) {
 					request,
 					response,
 					500,
+					message500,
 					error
 				)
 

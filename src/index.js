@@ -15,18 +15,26 @@ const loadData = require('./routines/loadData')
 // Route initialisers
 const routes = require('./routes')
 
+// Errors
+const ScamOptionsError = require('./errors/ScamOptionsError')
+
 module.exports = {
 
 	// Components
 	logger: logger,
 
 	// Props
+
 	app: null,
 	cache: null,
+	debug: null,
+
 	data: {},
 	dbPath: null,
 	endpoints: null,
 	schema: null,
+
+
 
 	// Setters
 
@@ -41,6 +49,13 @@ module.exports = {
 			if (_.isNumber(cache) && cache > 0) {
 				this.cache = cache
 			}
+		}
+		return this
+	},
+
+	setDebug: function (debug) {
+		if (debug) {
+			this.debug = true
 		}
 		return this
 	},
@@ -199,14 +214,36 @@ module.exports = {
 		// Store reference to app and register some middleware
 		this.setApp(app).prepareApp()
 
-		// Set default cache time
+		// Consume options
+		this.setOptions(options)
+
+		// Define endpoints based on resource types
+		this.setEndpoints(this.getEndpoints())
+
+		// Register routes and route handlers for all resource types
+		this.initRoutes()
+
+		return this
+	},
+
+	setOptions: function (options) {
+
+		// Set default cache time that can be overwritten per resource in schema
 		this.setCache(options.cache)
+
+		// Enable or disable debug mode
+		this.setDebug(options.debug)
 
 		// Data as object or as a path to require from
 		if (_.isPlainObject(options.data)) {
 			this.setData(options.data)
+
+		// Data is given as path to require from
 		} else if (_.isString(options.data)) {
 			this.setDataFromPath(options.data)
+
+		} else if (options.data) {
+			throw new ScamOptionsError('options.data.format')
 		}
 
 		// If database path was provided, use it instead of an in-memory DB
@@ -221,13 +258,6 @@ module.exports = {
 			this.setSchemaFromPath(options.schema)
 		}
 
-		// Define endpoints based on resource types
-		this.setEndpoints(this.getEndpoints())
-
-		// Register routes and route handlers for all resource types
-		this.initRoutes()
-
-		return this
 	}
 
 }

@@ -13,7 +13,10 @@ module.exports = function (scam) {
 		// Register update endpoint
 		scam.app.put('/' + resource.plural + '/:id', function (request, response) {
 
-			let requestedId = parseInt(request.params.id)
+			const requestedId = parseInt(request.params.id)
+
+			const message404 = 'A ' + resource.singular + ' with the requested ID ' + requestedId + ' does not exist'
+			const message500 = 'Something went wrong when removing this resource.'
 
 			// Fetch supported values from request body
 			// FIXME: should be helper
@@ -77,7 +80,11 @@ module.exports = function (scam) {
 								request,
 								response,
 								500,
-								error
+								message500,
+								[
+									'select.one(...).catch()',
+									error
+								]
 							)
 						})
 
@@ -89,7 +96,11 @@ module.exports = function (scam) {
 							request,
 							response,
 							500,
-							error
+							message500,
+							[
+								'update.one(...).catch()',
+								error
+							]
 						)
 
 					})
@@ -102,7 +113,7 @@ module.exports = function (scam) {
 						request,
 						response,
 						404,
-						'A ' + resource.singular + ' with the requested ID ' + requestedId + ' does not exist'
+						message404
 					)
 				}
 
@@ -114,7 +125,11 @@ module.exports = function (scam) {
 					request,
 					response,
 					500,
-					error
+					message500,
+					[
+						'exists.where(...).catch()',
+						error
+					]
 				)
 
 			})

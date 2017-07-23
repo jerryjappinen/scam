@@ -3,8 +3,12 @@ const Database = require('better-sqlite3')
 const squel = require('squel')
 
 const config = require('../config')
+
+const getRawType = require('../helpers/getRawType')
 const normalizeWhereArray = require('../helpers/normalizeWhereArray')
 const normalizeWhereValue = require('../helpers/normalizeWhereValue')
+const normalizeWhereQuery = require('../helpers/normalizeWhereQuery')
+
 const transformOutOne = require('../transform/transformOutOne')
 const transformOutMany = require('../transform/transformOutMany')
 
@@ -65,9 +69,13 @@ module.exports = {
 		let query = squel.select().from(resource.plural)
 
 		// Chain where statements
+		// NOTE: normalizing where should be it's own module almost
 		for (let fieldName in where) {
-			let value = normalizeWhereArray(fieldName, resourceType, schema, where[fieldName])
+			let rawType = getRawType(fieldName, resourceType, schema)
+
+			let value = normalizeWhereArray(rawType, where[fieldName])
 			let field = resource.fields[fieldName]
+
 
 			// Many possible values provided, using OR to select all matches
 			if (value instanceof Array) {
@@ -75,7 +83,7 @@ module.exports = {
 				// Normalize each value item
 				let values = _.map(value, function (singleValue) {
 					if (field) {
-						return normalizeWhereValue(fieldName, resourceType, schema, singleValue)
+						return normalizeWhereValue(rawType, singleValue)
 					}
 					return singleValue
 				})
@@ -85,7 +93,10 @@ module.exports = {
 
 			// Just one
 			} else {
-				query = query.where(fieldName + ' = ' + normalizeWhereValue(fieldName, resourceType, schema, value))
+				let whereValue = normalizeWhereValue(rawType, value)
+				let whereQuery = normalizeWhereQuery(rawType, whereValue)
+
+				query = query.where(fieldName + ' ' + whereQuery)
 			}
 
 		}

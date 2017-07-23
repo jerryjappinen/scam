@@ -15,6 +15,8 @@ module.exports = function (scam) {
 		// Register list getter endpoint
 		scam.app.get('/' + resource.plural, function (request, response) {
 
+			const message500 = 'Something went wrong when looking for these resources.'
+
 			// Use query parameters to filter list
 			// NOTE: would it be better to not loop all query params here?
 			let where = {}
@@ -52,6 +54,7 @@ module.exports = function (scam) {
 					request,
 					response,
 					500,
+					message500,
 					error
 				)
 
