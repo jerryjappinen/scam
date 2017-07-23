@@ -28,15 +28,21 @@
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
 - [ ] `updated` timestamp
-- [ ] Make `required` work (return errors from POST and UPDATE)
+- [ ] Make `required` work in schema (return errors from POST and UPDATE)
+- [ ] Make `default` work in schema
+- [ ] Support POSTing an array of resources (`insert.many`)
+- [ ] Infer type from default if omitted
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
 - [ ] Input validation errors
+- [ ] Validate schema format
+- [ ] Validate data format and against schems
 - [x] Validate options on init
 - [x] Support schema and schema path as option
 - [x] Support data and data path as option
-- [ ] Support in-memory db
+- [ ] Support in-memory db when databasePath is omitted
+- [ ] `.log()` some more information about about data, schema, databasePath and other options
 - [ ] Validate all params (sort, nest, filter per field rawType)
 
 ## Rewrite
