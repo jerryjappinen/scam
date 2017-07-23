@@ -152,8 +152,9 @@ module.exports = {
 		let filters = [
 			['by ID', '?id=4'],
 			['with OR', '?id=4,5,6'],
+			['with operators', '?id=!4    ?age=>20'],
 			['by any field', '?email=foo@bar.com'],
-			['by multiple fields', '?role=guest&paymentStatus=bad']
+			['by multiple fields', '?role=admin&age=<20']
 		]
 
 		// Heading

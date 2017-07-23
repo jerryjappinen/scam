@@ -19,7 +19,7 @@ try {
 
 		// Other options
 		cache: 0,
-		data: ['foo'],
+		data: require('./data'),
 		schema: require('./schema'),
 		databasePath: path.resolve(__dirname, 'db/db.sql')
 	})
