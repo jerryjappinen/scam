@@ -5,7 +5,8 @@ function ScamOptionsError (code) {
 	const message = config.errorMessages[code]
 
 	this.name = 'ScamOptionsError'
-	this.code = 'ScamOptionsError'
+	this.code = code
+
 	this.message = config.errorMessages['options'] + (message ? ': ' + message : message)
 
 	this.stack = (new Error()).stack

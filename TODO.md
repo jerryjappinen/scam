@@ -22,7 +22,8 @@
 - [x] ~~Control nesting level via `depth` param (have to control circular references somehow)~~
 	- One is enough
 - [x] Add `logEndpoints` to module
-- [ ] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
+- [x] Add option for debug mode and print internal error messages as debug field
+- [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
 - [ ] Separate repos for demo and module
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
@@ -31,12 +32,12 @@
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
-- [ ] Validation errors for input in scam
-- [ ] Validate options on init
-- [ ] Support schema and schema path as option
+- [ ] Input validation errors
+- [x] Validate options on init
+- [x] Support schema and schema path as option
+- [x] Support data and data path as option
 - [ ] Support in-memory db
 - [ ] Validate all params (sort, nest, filter per field rawType)
-- [ ] Add option for debug mode and print internal error messages as debug field
 
 ## Rewrite
 

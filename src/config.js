@@ -63,7 +63,8 @@ module.exports = {
 		options: 'Incorrect options passed to Scam',
 
 		// Option-related error codes
-		'options.data.format': 'Data was not passed in the correct format. Pass data as an object, or a string of a path to require data from.'
+		'options.data.format': 'Data was not passed in the correct format. Pass data as an object, or a string of a path to require data from.',
+		'options.schema.format': 'Schema was not passed in the correct format. Pass schema as an object, or a string of a path to require schema from.'
 
 	}
 

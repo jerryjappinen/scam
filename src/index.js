@@ -234,7 +234,11 @@ module.exports = {
 		// Enable or disable debug mode
 		this.setDebug(options.debug)
 
-		// Data as object or as a path to require from
+
+
+		// Options
+
+		// Data can be used as it is
 		if (_.isPlainObject(options.data)) {
 			this.setData(options.data)
 
@@ -242,20 +246,35 @@ module.exports = {
 		} else if (_.isString(options.data)) {
 			this.setDataFromPath(options.data)
 
+		// Data is not ok
 		} else if (options.data) {
 			throw new ScamOptionsError('options.data.format')
 		}
+
+
+
+		// Database path
 
 		// If database path was provided, use it instead of an in-memory DB
 		if (_.isString(options.databasePath)) {
 			this.setDatabasePath(options.databasePath)
 		}
 
-		// Schema as object or as a path to require from
+
+
+		// Schema
+
+		// Schema can be used as it is
 		if (_.isPlainObject(options.schema)) {
 			this.setSchema(options.schema)
+
+		// Schema is given as path to require from
 		} else if (_.isString(options.schema)) {
 			this.setSchemaFromPath(options.schema)
+
+		// Schema is not ok
+		} else if (options.schema) {
+			throw new ScamOptionsError('options.schema.format')
 		}
 
 	}
