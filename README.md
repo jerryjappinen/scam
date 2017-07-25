@@ -17,24 +17,24 @@ Define your schema:
 
 ```js
 {
-	posts: {
-		singular: 'post',
-		plural: 'posts',
-		fields: [
-			name: {
-				type: 'string'
-			},
-			body: {
-				type: 'string'
-			},
-			user: {
-				type: 'user' // Note singular
-			},
-			comments: {
-				type: 'comments' // Note plural
-			}
-		]
-	}
+  posts: {
+    singular: 'post',
+    plural: 'posts',
+    fields: [
+      name: {
+        type: 'string'
+      },
+      body: {
+        type: 'string'
+      },
+      user: {
+        type: 'user' // Note singular
+      },
+      comments: {
+        type: 'comments' // Note plural
+      }
+    ]
+  }
 }
 ```
 
@@ -42,17 +42,17 @@ Optionally, define dummy data:
 
 ```js
 {
-	posts: [
-		{
-			name: 'Some Name',
-			body: 'Body text body text body text',
-			user: 1,
-			comments: [1, 2, 3]
-		},
+  posts: [
+    {
+      name: 'Some Name',
+      body: 'Body text body text body text',
+      user: 1,
+      comments: [1, 2, 3]
+    },
 
-		...
+    ...
 
-	]
+  ]
 }
 ```
 
@@ -66,15 +66,15 @@ const app = express()
 app.set('port', (process.env.PORT || 3333))
 
 scam.init(app, {
-	cache: 0,
-	data: { ... },
-	debug: true,
-	schema: { ... },
-	databasePath: path.resolve(__dirname, 'db/db.sql')
+  cache: 0,
+  data: { ... },
+  debug: true,
+  schema: { ... },
+  databasePath: path.resolve(__dirname, 'db/db.sql')
 })
 
 app.listen(app.get('port'), function () {
-	scam.log()
+  scam.log()
 })
 ```
 
@@ -84,20 +84,20 @@ See the [demo project](https://github.com/Eiskis/scam-demo) for more details.
 
 ```js
 {
-	// Set Scam to debug mode (prints internal error messages on 500)
-	debug: debug,
+  // Set Scam to debug mode (prints internal error messages on 500)
+  debug: debug,
 
-	// Default cache time (can be overwritten per resource in schema)
-	cache: 0,
+  // Default cache time (can be overwritten per resource in schema)
+  cache: 0,
 
-	// Dummy data as an object, or path to `require` it from
-	data: require('./data'),
+  // Dummy data as an object, or path to `require` it from
+  data: require('./data'),
 
-	// API schema as an object, or path to `require` it from
-	schema: require('./schema'),
+  // API schema as an object, or path to `require` it from
+  schema: require('./schema'),
 
-	// Path of the db file to create/remove/update (in-memory DB not yet supported)
-	databasePath: path.resolve(__dirname, 'db/db.sql')
+  // Path of the db file to create/remove/update (in-memory DB not yet supported)
+  databasePath: path.resolve(__dirname, 'db/db.sql')
 }
 ```
 
