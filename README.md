@@ -5,11 +5,9 @@ Simple schema-based CRUD app bootstrapper on node and SQLite.
 
 - Source: https://github.com/Eiskis/scam
 - Demo: https://scam-demo.herokuapp.com/
-- Demo source: https://github.com/Eiskis/scam
+- Demo source: https://github.com/Eiskis/scam-demo
 
 As the name implies, **Scam is not suitable for production use**! Scam is a prototyping tool intended for designing REST APIs and supporting frontend development.
-
-**Also, do not use Scam yet!** It's not ready for prime time and will see a healthy number of breaking changes very soon.
 
 ## Usage
 
@@ -100,3 +98,9 @@ The following raw types are supported:
 Default is `'integer'`, and it doesn't need to be specified.
 
 You can also use the key of another resource type as the `type`. In this case the values are integers and are treated as IDs pointing to resources of the given type.
+
+## Contributing
+
+Scam is still early in development, and pretty hacky. See [todo.md](./TODO.md) for the next steps.
+
+Feel free to file issues or PRs though!
