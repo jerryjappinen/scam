@@ -56,7 +56,13 @@ See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js)
         type: 'comments' // Note plural
       }
     ]
-  }
+  },
+	comments: {
+		...
+	},
+	users: {
+		...
+	}
 }
 ```
 
