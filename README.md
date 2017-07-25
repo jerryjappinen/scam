@@ -11,9 +11,31 @@ As the name implies, **Scam is not suitable for production use**! Scam is a prot
 
 ## Usage
 
-### Schema
+```sh
+npm install express scam --save
+```
 
-Define your schema:
+```js
+const path = require('path')
+const express = require('express')
+const scam = require('scam')
+const app = express()
+app.set('port', (process.env.PORT || 3333))
+
+scam.init(app, {
+  data: { ... },
+  schema: { ... },
+  databasePath: path.resolve(__dirname, './db.sql')
+})
+
+app.listen(app.get('port'), function () {
+  scam.log()
+})
+```
+
+See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js) for a better sample.
+
+## Schema
 
 ```js
 {
@@ -38,7 +60,7 @@ Define your schema:
 }
 ```
 
-Optionally, define dummy data:
+## Data (optional)
 
 ```js
 {
@@ -55,30 +77,6 @@ Optionally, define dummy data:
   ]
 }
 ```
-
-Init the app:
-
-```js
-const path = require('path')
-const express = require('express')
-const scam = require('scam')
-const app = express()
-app.set('port', (process.env.PORT || 3333))
-
-scam.init(app, {
-  cache: 0,
-  data: { ... },
-  debug: true,
-  schema: { ... },
-  databasePath: path.resolve(__dirname, 'db/db.sql')
-})
-
-app.listen(app.get('port'), function () {
-  scam.log()
-})
-```
-
-See the [demo project](https://github.com/Eiskis/scam-demo) for more details.
 
 ### Options
 
