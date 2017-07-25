@@ -11,7 +11,7 @@
     "lint": "npm run lint:lib && npm run lint:test",
     "lint:lib": "eslint --ext .js lib",
     "lint:test": "eslint --ext .js test",
-    "test": "node ./test/tape.js"
+    "tape": "node ./test/tape.js"
   },
   "author": "",
   "dependencies": {
