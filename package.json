@@ -1,22 +1,17 @@
 {
   "name": "scam",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:Eiskis/scam.git"
   },
   "scripts": {
-    "reload": "npm run clear && npm run create && npm run load",
-    "clear": "node ./index.js clear",
-    "create": "node ./index.js create",
-    "load": "node ./index.js load",
-    "start": "node ./index.js",
-    "dev": "nodemon ./index.js debug",
-    "lint": "eslint --ext .js src scripts",
-    "tape": "node ./test/tape.js",
-    "test": "mocha --timeout 10000"
+    "lint": "npm run lint:lib && npm run lint:test",
+    "lint:lib": "eslint --ext .js lib",
+    "lint:test": "eslint --ext .js test",
+    "test": "node ./test/tape.js"
   },
   "author": "",
   "dependencies": {
@@ -32,10 +27,7 @@
     "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
     "blue-tape": "^1.0.0",
-    "chai": "^4.1.0",
-    "chai-http": "^3.0.0",
     "eslint": "^4.3.0",
-    "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "standard": "^10.0.2",
     "tape": "^4.7.0"
