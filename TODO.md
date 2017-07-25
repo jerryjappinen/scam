@@ -26,23 +26,23 @@
 - [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
 - [x] Support POSTing an array of resources (`insert.many`)
 - [ ] Support PUTting an array of resources (`update.many`)
-- [ ] Separate repos for demo and module
-- [ ] Appropriate error codes (not 500 all the time)
+- [x] Separate repos for demo and module
+- [ ] Appropriate error codes (returns 500 quite often)
 - [ ] Define and document error format
 - [ ] `updated` timestamp
 - [ ] Make `required` work in schema (return errors from POST and UPDATE)
 - [ ] Make `default` work in schema
-- [ ] Infer type from default if omitted
+- [ ] Infer type from default if type is omitted in schema
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
 - [ ] Pagination (limits and offsets)
-- [ ] Input validation errors
-- [ ] Validate schema format
-- [ ] Validate data format and against schems
-- [x] Validate options on init
+- [ ] Proper input validation errors
+- [ ] Validate schema upon init
+- [ ] Validate data upon init (against schema)
+- [x] Validate options upon init
 - [x] Support schema and schema path as option
 - [x] Support data and data path as option
-- [ ] Support in-memory db when databasePath is omitted
+- [ ] Default to in-memory db when databasePath is omitted
 - [ ] `.log()` some more information about about data, schema, databasePath and other options
 - [ ] Validate all params (sort, nest, filter per field rawType)
 
