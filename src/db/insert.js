@@ -64,6 +64,40 @@ module.exports = {
 				reject(error)
 			}
 		})
+	},
+
+	many: function (dbPath, schema, resourceType, inputs) {
+		const insert = this
+		let promises = []
+
+		// Insert each input
+		for (var i = 0; i < inputs.length; i++) {
+			let input = inputs[i]
+
+			// Register promise for each insert
+			promises.push(new Promise(function (resolve, reject) {
+
+				// `insert.one`
+				insert.one(dbPath, schema, resourceType, input).then(function (id) {
+					resolve(id)
+				}).catch(function (error) {
+					reject(error)
+				})
+
+			}))
+
+		}
+
+		// Resolve or reject `insert.many`
+		return new Promise(function (resolve, reject) {
+			Promise.all(promises).then(function (ids) {
+				// console.log('insert.many resolve', ids)
+				resolve(ids)
+			}).catch(function (errors) {
+				// console.log('insert.many resolve', errors)
+				reject(errors)
+			})
+		})
 	}
 
 }

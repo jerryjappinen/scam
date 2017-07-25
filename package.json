@@ -34,7 +34,7 @@
     "blue-tape": "^1.0.0",
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
-    "eslint": "^4.2.0",
+    "eslint": "^4.3.0",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
     "standard": "^10.0.2",

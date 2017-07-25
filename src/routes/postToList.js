@@ -1,3 +1,7 @@
+const _ = require('lodash')
+
+const normalizeRequestParamatersForInput = require('../helpers/normalizeRequestParamatersForInput')
+
 const fail = require('../response/fail')
 const success = require('../response/success')
 
@@ -11,48 +15,64 @@ module.exports = function (scam) {
 
 		// Insert response handler
 		let handler = function (request, response) {
+			const message500one = 'Something went wrong when adding this resource.'
+			const message500multiple = 'Something went wrong when adding these resources.'
+			let inputParams = request.body
 
-			const message500 = 'Something went wrong when adding this resource.'
+			// Insert many
+			if (_.isArray(inputParams)) {
+				let valuesToInsert = []
 
-			// Fetch supported values from request body
-			// FIXME: should be helper
-			let valuesToInsert = {}
-			for (let fieldName in resource.fields) {
-				if (typeof request.body[fieldName] !== 'undefined') {
-					valuesToInsert[fieldName] = request.body[fieldName]
+				// Normalize each array item sent
+				for (var i = 0; i < inputParams.length; i++) {
+					valuesToInsert.push(normalizeRequestParamatersForInput(inputParams[i], resource.fields))
 				}
-			}
 
-			// Insert new object
-			insert.one(
-				scam.dbPath,
-				scam.schema,
-				resourceType,
-				valuesToInsert
-
-			// After insert...
-			).then(function (newRowId) {
-
-				// Fetch the inserted object
-				select.one(
+				// Insert new objects
+				insert.many(
 					scam.dbPath,
 					scam.schema,
 					resourceType,
-					newRowId,
-					false
+					valuesToInsert
 
-				// Send success response with the newly created object
-				).then(function (row) {
-					success(
-						scam,
+				// After insert...
+				).then(function (newRowIds) {
+
+					// Fetch the inserted objects
+					select.all(
+						scam.dbPath,
+						scam.schema,
 						resourceType,
-						request,
-						response,
-						201,
-						row
-					)
+						{
+							id: newRowIds
+						},
+						false
 
-				// Could not fetch the new object
+					// Send success response with the newly created objects
+					).then(function (rows) {
+						success(
+							scam,
+							resourceType,
+							request,
+							response,
+							201,
+							rows
+						)
+
+					// Could not fetch the new objects
+					}).catch(function (error) {
+						fail(
+							scam,
+							resourceType,
+							request,
+							response,
+							500,
+							message500multiple,
+							error
+						)
+					})
+
+				// Something went wrong when doing the insert
 				}).catch(function (error) {
 					fail(
 						scam,
@@ -60,24 +80,85 @@ module.exports = function (scam) {
 						request,
 						response,
 						500,
-						message500,
+						message500multiple,
 						error
 					)
+
 				})
 
-			// Something went wrong when doing the insert
-			}).catch(function (error) {
+			// Insert one
+			} else if (_.isPlainObject(inputParams)) {
+
+				// Normalize input sent
+				let valuesToInsert = normalizeRequestParamatersForInput(request.body, resource.fields)
+
+				// Insert new object
+				insert.one(
+					scam.dbPath,
+					scam.schema,
+					resourceType,
+					valuesToInsert
+
+				// After insert...
+				).then(function (newRowId) {
+
+					// Fetch the inserted object
+					select.one(
+						scam.dbPath,
+						scam.schema,
+						resourceType,
+						newRowId,
+						false
+
+					// Send success response with the newly created object
+					).then(function (row) {
+						success(
+							scam,
+							resourceType,
+							request,
+							response,
+							201,
+							row
+						)
+
+					// Could not fetch the new object
+					}).catch(function (error) {
+						fail(
+							scam,
+							resourceType,
+							request,
+							response,
+							500,
+							message500one,
+							error
+						)
+					})
+
+				// Something went wrong when doing the insert
+				}).catch(function (error) {
+					fail(
+						scam,
+						resourceType,
+						request,
+						response,
+						500,
+						message500one,
+						error
+					)
+
+				})
+
+			// Bad input
+			} else {
 				fail(
 					scam,
 					resourceType,
 					request,
 					response,
-					500,
-					message500,
-					error
+					400,
+					'Please insert either multiple resources as an array or one resource as an object with key-value pairs.'
 				)
-
-			})
+			}
 
 		}
 

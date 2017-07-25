@@ -24,13 +24,14 @@
 - [x] Add `logEndpoints` to module
 - [x] Add option for debug mode and print internal error messages as debug field
 - [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
+- [x] Support POSTing an array of resources (`insert.many`)
+- [ ] Support PUTting an array of resources (`update.many`)
 - [ ] Separate repos for demo and module
 - [ ] Appropriate error codes (not 500 all the time)
 - [ ] Define and document error format
 - [ ] `updated` timestamp
 - [ ] Make `required` work in schema (return errors from POST and UPDATE)
 - [ ] Make `default` work in schema
-- [ ] Support POSTing an array of resources (`insert.many`)
 - [ ] Infer type from default if omitted
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
