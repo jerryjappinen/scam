@@ -9,6 +9,8 @@ Simple schema-based REST API on node and SQLite, with fully functional CRUD flow
 
 **Scam is not suitable for production use** as the name implies! Scam is a prototyping tool intended for designing REST APIs and supporting frontend development.
 
+Scam is still quite early in development.
+
 ## Usage
 
 ```sh
