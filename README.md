@@ -35,7 +35,7 @@ app.listen(app.get('port'), function () {
 })
 ```
 
-See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js) for a better sample.
+See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js) for a better example.
 
 ## Schema
 

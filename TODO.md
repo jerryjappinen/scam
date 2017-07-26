@@ -24,17 +24,20 @@
 - [x] Add `logEndpoints` to module
 - [x] Add option for debug mode and print internal error messages as debug field
 - [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
+- [x] Separate repos for demo and module
+- [x] Validate options upon init
+- [x] Support schema and schema path as option
+- [x] Support data and data path as option
 - [x] Support `POST`ing multiple resources (`insert.many` + handlers)
 - [x] Support `PUT`ting multiple resources (`update.many` + handlers)
 - [x] Support `DELETE` for multiple resources (`delete.many` + handlers)
+- [x] `updated` timestamp
 - [ ] Differentiate between `PATCH` and `PUT`
 - [ ] Report found and not found IDs in `deleteToList`
-- [x] Separate repos for demo and module
+- [x] Make `default` work in schema
+- [ ] Make `required` work in schema (return errors from POST and UPDATE)
 - [ ] Appropriate error codes (returns 500 quite often)
 - [ ] Define and document error format
-- [ ] `updated` timestamp
-- [ ] Make `required` work in schema (return errors from POST and UPDATE)
-- [x] Make `default` work in schema
 - [ ] Infer type from default if type is omitted in schema
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
@@ -42,15 +45,13 @@
 - [ ] Proper input validation errors
 - [ ] Validate schema upon init
 - [ ] Validate data upon init (against schema)
-- [x] Validate options upon init
-- [x] Support schema and schema path as option
-- [x] Support data and data path as option
 - [ ] Default to in-memory db when databasePath is omitted
 - [ ] `.log()` some more information about about data, schema, databasePath and other options
 - [ ] Validate all params (sort, nest, filter per field rawType)
 - [ ] Support custom hooks and transformers per resource (pass in as options or in schema)
 - [ ] `update`, `insert` and `remove` multiple items in SQL at once instead of using the `.one` methods
 - [ ] Author the module as express middleware
+- [ ] Move all of these tasks to GitHub issues
 
 ## Rewrite
 
