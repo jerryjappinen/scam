@@ -24,8 +24,10 @@
 - [x] Add `logEndpoints` to module
 - [x] Add option for debug mode and print internal error messages as debug field
 - [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
-- [x] Support POSTing an array of resources (`insert.many`)
-- [ ] Support PUTting an array of resources (`update.many`)
+- [x] Support `POST`ing multiple resources (`insert.many` + handlers)
+- [x] Support `PUT`ting multiple resources (`update.many` + handlers)
+- [ ] Support `DELETE` for multiple resources (`delete.many` + handlers)
+- [ ] Differentiate between `PATCH` and `PUT`
 - [x] Separate repos for demo and module
 - [ ] Appropriate error codes (returns 500 quite often)
 - [ ] Define and document error format
@@ -49,11 +51,4 @@
 
 ## Rewrite
 
-Refactor app to have more structure and less passing the same arguments everywhere.
-
-- `ScamConfig`
-- `ScamSchema`
-- `ScamResourceType`
-- `ScamResourceField`
-- `ScamResponseSuccess`
-- `ScamResponseFail`
+Refactor app to have a real scalable structure and less just passing the same arguments to helpers.
