@@ -164,4 +164,4 @@ You can also use the key of another resource type as the `type`. In this case th
 
 Scam is still early in development, and pretty hacky. See [todo.md](./TODO.md) for the next steps.
 
-Feel free to file issues or PRs though!
+Feel free to [file issues or PRs](https://github.com/Eiskis/scam/issues) though!
