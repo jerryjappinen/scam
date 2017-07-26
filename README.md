@@ -51,6 +51,10 @@ See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js)
       body: {
         type: 'string'
       },
+      flagged: {
+        type: 'boolean',
+				default: false
+      },
       user: {
         type: 'user' // Note singular
       },

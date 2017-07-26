@@ -31,7 +31,7 @@
 - [ ] Define and document error format
 - [ ] `updated` timestamp
 - [ ] Make `required` work in schema (return errors from POST and UPDATE)
-- [ ] Make `default` work in schema
+- [x] Make `default` work in schema
 - [ ] Infer type from default if type is omitted in schema
 - [ ] Document reserved words (query parameters conflicting with prop names, types conflicting with resource types)
 - [ ] Set up test coverage
