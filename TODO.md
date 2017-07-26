@@ -45,6 +45,7 @@
 - [ ] Default to in-memory db when databasePath is omitted
 - [ ] `.log()` some more information about about data, schema, databasePath and other options
 - [ ] Validate all params (sort, nest, filter per field rawType)
+- [ ] Support custom hooks and transformers per resource (pass in as options or in schema)
 
 ## Rewrite
 
