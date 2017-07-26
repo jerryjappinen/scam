@@ -53,7 +53,7 @@ See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js)
       },
       flagged: {
         type: 'boolean',
-				default: false
+        default: false
       },
       user: {
         type: 'user' // Note singular
@@ -65,10 +65,10 @@ See the [demo project](https://github.com/Eiskis/scam-demo/blob/master/index.js)
   },
   comments: {
     ...
-	},
+  },
   users: {
     ...
-	}
+  }
 }
 ```
 
