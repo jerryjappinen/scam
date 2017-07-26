@@ -26,8 +26,9 @@
 - [x] Filter integers and timestamps by operator (`<`, `>`, `<=`, `>=`)
 - [x] Support `POST`ing multiple resources (`insert.many` + handlers)
 - [x] Support `PUT`ting multiple resources (`update.many` + handlers)
-- [ ] Support `DELETE` for multiple resources (`delete.many` + handlers)
+- [x] Support `DELETE` for multiple resources (`delete.many` + handlers)
 - [ ] Differentiate between `PATCH` and `PUT`
+- [ ] Report found and not found IDs in `deleteToList`
 - [x] Separate repos for demo and module
 - [ ] Appropriate error codes (returns 500 quite often)
 - [ ] Define and document error format
@@ -48,6 +49,8 @@
 - [ ] `.log()` some more information about about data, schema, databasePath and other options
 - [ ] Validate all params (sort, nest, filter per field rawType)
 - [ ] Support custom hooks and transformers per resource (pass in as options or in schema)
+- [ ] `update`, `insert` and `remove` multiple items in SQL at once instead of using the `.one` methods
+- [ ] Author the module as express middleware
 
 ## Rewrite
 
